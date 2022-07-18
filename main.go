@@ -11,6 +11,7 @@ import (
 	"github.com/i0Ek3/blogie/internal/routers"
 	"github.com/i0Ek3/blogie/pkg/logger"
 	"github.com/i0Ek3/blogie/pkg/setting"
+	"github.com/i0Ek3/blogie/pkg/tracer"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
@@ -28,6 +29,11 @@ func init() {
 	err = setupLogger()
 	if err != nil {
 		log.Fatalf("init.setupLogger err: %v", err)
+	}
+
+	err = setupTracer()
+	if err != nil {
+		log.Fatalf("init.setupTracer err: %v", err)
 	}
 }
 
@@ -85,6 +91,18 @@ func setupLogger() error {
 		LocalTime: true,
 	}, "", log.LstdFlags)
 
+	return nil
+}
+
+func setupTracer() error {
+	jaegerTracer, _, err := tracer.NewJaegerTracer(
+		"blogie",
+		"127.0.0.1:6831",
+	)
+	if err != nil {
+		return err
+	}
+	global.Tracer = jaegerTracer
 	return nil
 }
 

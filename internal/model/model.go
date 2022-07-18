@@ -8,7 +8,7 @@ import (
 	"github.com/i0Ek3/blogie/pkg/setting"
 	"github.com/jinzhu/gorm"
 
-	//opentrace "github.com/eddycij/opentracing-gorm"
+	otg "github.com/eddycjy/opentracing-gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
@@ -52,7 +52,7 @@ func NewDBEngine(dbSetting *setting.DatabaseSettingS) (*gorm.DB, error) {
 	db.Callback().Delete().Replace("gorm:delete", deleteCallback)
 	db.DB().SetMaxIdleConns(dbSetting.MaxIdleConns)
 	db.DB().SetMaxOpenConns(dbSetting.MaxOpenConns)
-	//opentrace.AddGormCallbacks(db)
+	otg.AddGormCallbacks(db)
 	return db, nil
 }
 

@@ -43,11 +43,20 @@ TODO: picture of blogie.
 ### Structure
 
 ```console
+├── LICENSE
+├── Makefile
 ├── README.md
 ├── configs
+│   └── config.yaml
 ├── docs
-│   └── sql
+│   ├── docs.go
+│   ├── swagger.json
+│   └── swagger.yaml
 ├── global
+│   ├── db.go
+│   ├── setting.go
+│   ├── tracer.go
+│   └── validator.go
 ├── go.mod
 ├── go.sum
 ├── images
@@ -60,10 +69,24 @@ TODO: picture of blogie.
 │   └── service
 ├── main.go
 ├── pkg
+│   ├── app
+│   ├── convert
+│   ├── email
+│   ├── errcode
+│   ├── limiter
+│   ├── logger
+│   ├── setting
+│   ├── tracer
+│   └── upload
 ├── scripts
-│   └── install-mysql.sh
+│   ├── install-mysql.sh
+│   └── sql
 ├── storage
-└── third_party
+│   ├── logs
+│   └── uploads
+├── third_party
+└── util
+    └── md5.go
 ```
 
 ### Database
@@ -218,7 +241,7 @@ JWT contains three parts:
 After you finished the access control, you can generate token by run following command:
 
 ```shell
-curlie -X POST \
+$ curlie -X POST \
   'http://127.0.0.1:8080/auth' \
   -H 'app_key: i0Ek3' \
   -H 'app_secret: blogie'
@@ -247,6 +270,20 @@ During the operation of the application, new clients will be accessed constantly
 #### Timeout Control
 
 The mutual influence of upstream and downstream applications leads to a serial response, and eventually makes a certain scale unavailable in the entire cluster application. Therefore, we need to perform the most basic timeout control in all requests in the application.
+
+### Link Tracking
+
+In this part, we use Jaeger to implement link tracking which support OpenTracing specfication.
+
+First, we use docker to install Jaeger with following command:
+
+```shell
+$ docker run -d --name jaeger -e COLLECTOR_ZIPKIN_HTTP_PORT=9411 -p 5775:5775/udp -p 68
+31:6831/udp -p 6832:6832/udp -p 5778:5778 -p 16686:16686 -p 14268:14268 -p 9411:9411 jaegertracing/all-in-o
+ne:latest
+```
+
+And then, you can open `http://localhost:16686/` to check Jaeger's Web UI. 
 
 ## Issues
 

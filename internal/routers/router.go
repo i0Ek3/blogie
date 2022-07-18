@@ -35,7 +35,7 @@ func NewRouter() *gin.Engine {
 
 	r.Use(middleware.RateLimiter(methodLimiters))
 	r.Use(middleware.ContextTimeout(global.AppSetting.ContextTimeout * time.Second))
-
+	r.Use(middleware.Tracing())
 	r.Use(middleware.Translations())
 
 	url := ginSwagger.URL("http://127.0.0.1:8080/swagger/doc.json")
