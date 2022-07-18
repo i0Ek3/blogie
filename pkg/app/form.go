@@ -31,10 +31,8 @@ func (v ValidErrors) Errors() []string {
 	return errs
 }
 
-func BindAndValid(c *gin.Context, v interface{}) (bool, ValidErrors) {
+func bindAndValid(c *gin.Context, err error) (bool, ValidErrors) {
 	var errs ValidErrors
-	// ShouldBind just binds and validates parameters
-	err := c.ShouldBind(v)
 	if err != nil {
 		v := c.Value("trans")
 		trans, _ := v.(ut.Translator)
@@ -51,4 +49,17 @@ func BindAndValid(c *gin.Context, v interface{}) (bool, ValidErrors) {
 		return false, errs
 	}
 	return true, nil
+}
+
+func BindAndValid(c *gin.Context, v interface{}) (bool, ValidErrors) {
+	err := c.ShouldBindJSON(v)
+	if err != nil && err.Error() == "EOF" {
+		err = c.ShouldBind(v)
+	}
+	return bindAndValid(c, err)
+}
+
+func BindAndValidHeader(c *gin.Context, v interface{}) (bool, ValidErrors) {
+	err := c.ShouldBindHeader(v)
+	return bindAndValid(c, err)
 }

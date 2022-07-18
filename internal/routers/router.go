@@ -32,8 +32,11 @@ func NewRouter() *gin.Engine {
 	// Notes: StaticFS() -> createStaticHandler() -> fileServer.ServerHTTP()
 	r.StaticFS("/static", http.Dir(global.AppSetting.UploadSavePath))
 
+	r.POST("/auth", api.GetAuth)
+
 	// Group Router
 	apiv1 := r.Group("/api/v1")
+	apiv1.Use(middleware.JWT())
 	{
 		// API for tag
 		apiv1.POST("/tags", tag.Create)

@@ -78,6 +78,9 @@ $ mysql -uroot -p
 mysql> CREATE DATABASE blogie;
 mysql> USE blogie;
 mysql> SOURCE ./doc/sql/blog.sql; # import blog.sql
+
+# after import auth.sql(contained in blog.sql), insert following sql
+mysql> INSERT INTO `blogie`.`blog_auth`(`id`, `app_key`, `app_secret`, `created_on`, `created_by`, `modified_on`, `modified_by`, `deleted_on`, `is_del`) VALUES (1, 'i0Ek3', 'blogie', 0, 'i0Ek3', 0, '', 0, 0);
 ```
 
 After import blog.sql, it will create following four tables:
@@ -197,6 +200,31 @@ Verification rules used to validate the validity of struct fields, following bel
 | max      | Maximum                    |
 | oneof    | One of set                 |
 | len      | Required length equals len |
+
+### Access Control
+
+After we developed of finished some features we want to the other people to see it what it looks like, but we don't want all unreleavant people see that, so we should consider defense-in-depth and access control to API interfaces. 
+
+There are two common API access control schemes on the market today, namely OAuth 2.0 and JWT(JSON Web Token). In our project, we choose JWT to provide access control for API interfaces.
+
+JWT contains three parts:
+
+- Header
+
+- Payload
+
+- Signature
+
+After you finished the access control, you can generate token by run following command:
+
+```shell
+curlie -X POST \
+  'http://127.0.0.1:8080/auth' \
+  -H 'app_key: i0Ek3' \
+  -H 'app_secret: blogie'
+
+{"token":"eyJhbG...pXVCJ9.eyJhcH...dpZSJ9.9X4SFy...pxMcs8"}
+```
 
 ## Issues
 

@@ -31,3 +31,9 @@ Database:
   ParseTime: True
   MaxIdleConns: 10
   MaxOpenConns: 30
+
+# JWT config
+JWT:
+  Secret: i0Ek3
+  Issuer: blogie
+  Expire: 7200
