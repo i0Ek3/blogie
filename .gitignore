@@ -1,0 +1,8 @@
+# mac files
+.DS_Store
+
+# IDE files
+.vscode
+
+# Project files
+storage/*log
