@@ -1,11 +1,11 @@
-# server config
+# Server config
 Server:
   RunMode: debug
   HttpPort: 8080
   ReadTimeout: 60
   WriteTimeout: 60
 
-# application config
+# Application config
 App:
   DefaultPageSize: 10
   MaxPageSize: 100
@@ -18,8 +18,9 @@ App:
   UploadImageAllowExts:
     - .jpg
     - .png
+  ContextTimeout: 60
 
-# database config
+# Database config
 Database:
   DBType: mysql
   Username: root
@@ -37,3 +38,13 @@ JWT:
   Secret: i0Ek3
   Issuer: blogie
   Expire: 7200
+
+# Email config
+Email:
+  Host: smtp.qq.com
+  Port: 465
+  UserName:
+  Password:
+  IsSSL: True
+  From:
+  To:

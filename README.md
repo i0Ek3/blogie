@@ -27,7 +27,7 @@ A blog backend program developed with Gin which integrates many useful features.
 ### Build & Run
 
 ```shell
-$ go build . ; ./blogie -h
+$ go mod download ; make ; ./blogie -h
 ```
 
 ### Usage/Example
@@ -225,6 +225,28 @@ curlie -X POST \
 
 {"token":"eyJhbG...pXVCJ9.eyJhcH...dpZSJ9.9X4SFy...pxMcs8"}
 ```
+
+### Middleware
+
+#### Access Log
+
+Access log basically records the request method of each request, the start time of the method call, the end time of the method call, the method response result, and the status code of the method response result. and other additional attributes to achieve the effect of log link tracking.
+
+#### Recovery
+
+It is very important for abnormal capture and timely alarm notification, so we need to customize the recovery middleware for our project's own conditions or ecosystem to ensure that abnormalities are being captured normally, and it is necessary to be identified and processed in time.
+
+#### Service Information Storage
+
+Usually we often need to set some internal information in the process, such as the basic information such as the application name and the application version number, or the information storage of business attributes. At this time, there is a unified place to deal with.
+
+#### Interface Limiter
+
+During the operation of the application, new clients will be accessed constantly, and sometimes there will be a peak of traffic (such as marketing activities). It is very likely to cause accidents, so we often have a variety of means to restrict peaks, and the rate-limiting control of the application interface is one of the methods for the application interface.
+
+#### Timeout Control
+
+The mutual influence of upstream and downstream applications leads to a serial response, and eventually makes a certain scale unavailable in the entire cluster application. Therefore, we need to perform the most basic timeout control in all requests in the application.
 
 ## Issues
 
