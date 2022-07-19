@@ -323,11 +323,18 @@ In our project, we choose `ldflags` to set compile informations for our program,
 ```shell
 $ go build -ldflags "-X main.buildTime=`date +%Y-%m-%d,%H:%M:%S` -X main.buildVersion=1.0.0 -X main.gitCommitID=`git rev-parse HEAD`"
 
-
 build_time: 2022-07-19,14:53:56
 build_version: 1.0.0
 git_commit_id: xxxxxx
 ```
+
+### Graceful Shutdown/Boot
+
+In this project, we use signal to implement graceful shutdown and boot. On Unix/Linux platform, you can run command `kill -l` to check the signals of your system support. In our project, we accept two signals:
+
+- syscall.SIGINT(2), also you can type Ctrl+C to interrupt the program
+
+- syscall.SIGTERM(15)
 
 ## Issues
 
