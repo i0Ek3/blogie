@@ -13,12 +13,20 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
+	"github.com/go-playground/locales/en"
+	"github.com/go-playground/locales/zh"
+	ut "github.com/go-playground/universal-translator"
+	v10 "github.com/go-playground/validator/v10"
+	en_translations "github.com/go-playground/validator/v10/translations/en"
+	zh_translations "github.com/go-playground/validator/v10/translations/zh"
 	"github.com/i0Ek3/blogie/global"
 	"github.com/i0Ek3/blogie/internal/model"
 	"github.com/i0Ek3/blogie/internal/routers"
 	"github.com/i0Ek3/blogie/pkg/logger"
 	"github.com/i0Ek3/blogie/pkg/setting"
 	"github.com/i0Ek3/blogie/pkg/tracer"
+	"github.com/i0Ek3/blogie/pkg/validator"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
@@ -56,6 +64,11 @@ func init() {
 	err = setupTracer()
 	if err != nil {
 		log.Fatalf("init.setupTracer err: %v", err)
+	}
+
+	err = setupValidator()
+	if err != nil {
+		log.Fatalf("init.setupValidator err: %v", err)
 	}
 }
 
@@ -118,7 +131,7 @@ func main() {
 	// 2 SIGINT, 15 SIGTERM
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
-	log.Println("Shuting down server...")
+	log.Println("Shutting down server...")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
@@ -213,5 +226,27 @@ func setupTracer() error {
 		return err
 	}
 	global.Tracer = jaegerTracer
+	return nil
+}
+
+func setupValidator() error {
+	global.Validator = validator.NewCustomValidator()
+	global.Validator.Engine()
+	binding.Validator = global.Validator
+	uni := ut.New(en.New(), en.New(), zh.New())
+	v, ok := binding.Validator.Engine().(*v10.Validate)
+	if ok {
+		zhTran, _ := uni.GetTranslator("zh")
+		enTran, _ := uni.GetTranslator("en")
+		err := zh_translations.RegisterDefaultTranslations(v, zhTran)
+		if err != nil {
+			return err
+		}
+		err = en_translations.RegisterDefaultTranslations(v, enTran)
+		if err != nil {
+			return err
+		}
+	}
+	global.Ut = uni
 	return nil
 }

@@ -31,7 +31,7 @@ func (r *Response) ToResponse(data interface{}) {
 	r.Ctx.JSON(http.StatusOK, data)
 }
 
-// ToResponseList converts a list into a response list
+// ToResponseList converts a data list into a response list
 func (r *Response) ToResponseList(list interface{}, totalRows int) {
 	r.Ctx.JSON(http.StatusOK, gin.H{
 		"list": list,
@@ -43,7 +43,7 @@ func (r *Response) ToResponseList(list interface{}, totalRows int) {
 	})
 }
 
-// ToErrorResponse converts given detail into a response body with error message
+// ToErrorResponse converts given details into a response body with error message
 func (r *Response) ToErrorResponse(err *errcode.Error) {
 	response := gin.H{"code": err.Code(), "msg": err.Msg()}
 	details := err.Details()

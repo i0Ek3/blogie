@@ -44,7 +44,7 @@ func NewRouter() *gin.Engine {
 	// upload file and access file on static address
 	upload := api.NewUpload()
 	r.POST("/upload/file", upload.UploadFile)
-	// Notes: StaticFS() -> createStaticHandler() -> fileServer.ServerHTTP()
+	// NOTES: StaticFS() -> createStaticHandler() -> fileServer.ServerHTTP()
 	r.StaticFS("/static", http.Dir(global.AppSetting.UploadSavePath))
 
 	r.POST("/auth", api.GetAuth)

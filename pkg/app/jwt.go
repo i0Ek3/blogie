@@ -11,7 +11,8 @@ import (
 type Claims struct {
 	AppKey    string `json:"app_key"`
 	AppSecret string `json:"app_secret"`
-	jwt.StandardClaims
+	// NOTES: here too
+	jwt.RegisteredClaims
 }
 
 func GetJWTSecret() []byte {
@@ -24,15 +25,14 @@ func GenerateToken(appKey, appSecret string) (string, error) {
 	claims := Claims{
 		AppKey:    util.EncodeMD5(appKey),
 		AppSecret: util.EncodeMD5(appSecret),
-		// TODO: StandardClaims was deprecated in jwt v4, should use RegisteredClaims to replace
-		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: expireTime.Unix(),
+		// NOTES: change StandardClaims to RegisteredClaims in jwt v4
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: &jwt.NumericDate{expireTime},
 			Issuer:    global.JWTSetting.Issuer,
 		},
 	}
 	tokenClaims := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	token, err := tokenClaims.SignedString(GetJWTSecret())
-	//fmt.Println("----------> ", token, err)
 	return token, err
 }
 

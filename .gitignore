@@ -3,6 +3,7 @@
 
 # IDE files
 .vscode
+.idea
 
 # Project files
 vendor

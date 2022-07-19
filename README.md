@@ -42,15 +42,13 @@ Usage of ./blogie:
         run in which port
 ```
 
-### Usage/Example
-
-TODO
+# 
 
 ## Architecture
 
 In this part, we'll show you how this project work.
 
-TODO: picture of blogie.
+TODO
 
 ### Database
 
@@ -62,7 +60,7 @@ You should install MySQL on your system first, and then create a database which 
 # if you are macOS user, please make sure you have homebrew installed
 $ ./scripts/setup.sh
 
-# Or you want to setup it manually
+# or you want to setup it manually
 $ mysql -uroot -p
 mysql> CREATE DATABASE blogie;
 mysql> USE blogie;
