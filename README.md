@@ -24,10 +24,22 @@ A blog backend program developed with Gin which integrates many useful features.
 
 ## Getting Started
 
-### Build & Run
+### How-To(Build & Run)
 
 ```shell
+# required
+$ export GO111MODULE=on ; export GOPROXY=https://goproxy.cn
+
+# build & run
 $ go mod download ; make ; ./blogie -h
+
+Usage of ./blogie:
+  -config string
+        specify config path (default "configs/")
+  -mode string
+        run in which mode
+  -port string
+        run in which port
 ```
 
 ### Usage/Example
@@ -284,6 +296,38 @@ ne:latest
 ```
 
 And then, you can open `http://localhost:16686/` to check Jaeger's Web UI. 
+
+### Application Configuration
+
+We use fsnotify package to solve config reading issue.
+
+### Complie Program
+
+You can complie program directly by using Go for different platforms. 
+
+```shell
+# for Linux platform
+$ CGO_ENABLED=0 GOOS=linux go build -a -o blogie .
+
+# for Windows platform
+$ CGO_ENABLED=0 GOOS=windows go build -a -o blogie .
+
+# for macOS platform
+$ CGO_ENABLED=0 GOOS=darwin go build -a -o blogie .
+```
+
+If you want to shrink the size of binary of your program, you can remove debug and flags informations by run following command `go build -ldflags="-w -s"`. But, this stuff will cause callstack have no detailed informations while your program appears panic, also cannot use gdb debug the program.
+
+In our project, we choose `ldflags` to set compile informations for our program, you can run following command to set it:
+
+```shell
+$ go build -ldflags "-X main.buildTime=`date +%Y-%m-%d,%H:%M:%S` -X main.buildVersion=1.0.0 -X main.gitCommitID=`git rev-parse HEAD`"
+
+
+build_time: 2022-07-19,14:53:56
+build_version: 1.0.0
+git_commit_id: xxxxxx
+```
 
 ## Issues
 

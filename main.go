@@ -1,8 +1,11 @@
 package main
 
 import (
+	"flag"
+	"fmt"
 	"log"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -15,8 +18,23 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
+var (
+	port         string
+	runMode      string
+	config       string
+	isVersion    bool
+	buildTime    string
+	buildVersion string
+	gitCommitID  string
+)
+
 func init() {
-	err := setupSetting()
+	err := setupFlag()
+	if err != nil {
+		log.Fatalf("init.setupFlag err: %v", err)
+	}
+
+	err = setupSetting()
 	if err != nil {
 		log.Fatalf("init.setupSetting err: %v", err)
 	}
@@ -37,40 +55,110 @@ func init() {
 	}
 }
 
+// @title blogie
+// @version 1.0
+// @description A blog backend program developed with Gin.
+//  @termOfService https://github.com/i0Ek3/blogie
+func main() {
+
+	/* Gin demo
+	   // gin.Default() -> gin.New() -> Logger/Recovery -> r.GET() -> r.Run()
+	   // gin.Default() use to create an Engine instance which import Logger and Recovery middleware.
+	   // gin.New() initializes Engine instance and return.
+	   r := gin.Default()
+
+	   // r.GET() registers /ping router into handler.
+	   r.GET("/ping", func(c *gin.Context) {
+	       c.JSON(200, gin.H{"message": "pong"})
+	   })
+
+	   // r.Run() parses the given address and then invoke http.ListenAndServe() register
+	   // an Engine instance into handler, also Engine type implements ServeHTTP(), so Engine
+	   // can be passed by a parameter.
+	   r.Run()
+	*/
+
+	if isVersion {
+		fmt.Printf("build_time: %s\n", buildTime)
+		fmt.Printf("build_version: %s\n", buildVersion)
+		fmt.Printf("git_commit_id: %s\n", gitCommitID)
+		return
+	}
+
+	// set run mode for Gin
+	gin.SetMode(global.ServerSetting.RunMode)
+
+	// create an Engine instance which is a handler
+	router := routers.NewRouter()
+
+	// create a http server by our own rules
+	ser := &http.Server{
+		Addr:           ":" + global.ServerSetting.HttpPort,
+		Handler:        router,
+		ReadTimeout:    global.ServerSetting.ReadTimeout,
+		WriteTimeout:   global.ServerSetting.WriteTimeout,
+		MaxHeaderBytes: 1 << 20,
+	}
+
+	// uncomment it to run
+	// global.Logger.Infof("This is a test message to test Info level.")
+
+	ser.ListenAndServe()
+}
+
+func setupFlag() error {
+	flag.StringVar(&port, "port", "", "run in which port")
+	flag.StringVar(&runMode, "mode", "", "run in which mode")
+	flag.StringVar(&config, "config", "configs/", "specify config path")
+	flag.BoolVar(&isVersion, "version", false, "compile information")
+
+	flag.Parse()
+	return nil
+}
+
 func setupSetting() error {
-	setting, err := setting.NewSetting()
+	s, err := setting.NewSetting(strings.Split(config, ",")...)
 	if err != nil {
 		return err
 	}
 
-	err = setting.ReadSection("Server", &global.ServerSetting)
+	err = s.ReadSection("Server", &global.ServerSetting)
 	if err != nil {
 		return err
 	}
 
-	err = setting.ReadSection("App", &global.AppSetting)
+	err = s.ReadSection("App", &global.AppSetting)
 	if err != nil {
 		return err
 	}
 
-	err = setting.ReadSection("Database", &global.DatabaseSetting)
+	err = s.ReadSection("Database", &global.DatabaseSetting)
 	if err != nil {
 		return err
 	}
 
-	err = setting.ReadSection("JWT", &global.JWTSetting)
+	err = s.ReadSection("JWT", &global.JWTSetting)
 	if err != nil {
 		return err
 	}
 
-	err = setting.ReadSection("Email", &global.EmailSetting)
+	err = s.ReadSection("Email", &global.EmailSetting)
 	if err != nil {
 		return err
 	}
 
+	global.AppSetting.ContextTimeout *= time.Second
 	global.JWTSetting.Expire *= time.Second
 	global.ServerSetting.ReadTimeout *= time.Second
 	global.ServerSetting.WriteTimeout *= time.Second
+
+	if port != "" {
+		global.ServerSetting.HttpPort = port
+	}
+	if runMode != "" {
+		global.ServerSetting.RunMode = runMode
+	}
+
 	return nil
 }
 
@@ -104,48 +192,4 @@ func setupTracer() error {
 	}
 	global.Tracer = jaegerTracer
 	return nil
-}
-
-// @title blogie
-// @version 1.0
-// @description A blog backend program developed with Gin.
-//  @termOfService https://github.com/i0Ek3/blogie
-func main() {
-
-	/* Gin demo
-	   // gin.Default() -> gin.New() -> Logger/Recovery -> r.GET() -> r.Run()
-	   // gin.Default() use to create an Engine instance which import Logger and Recovery middleware.
-	   // gin.New() initializes Engine instance and return.
-	   r := gin.Default()
-
-	   // r.GET() registers /ping router into handler.
-	   r.GET("/ping", func(c *gin.Context) {
-	       c.JSON(200, gin.H{"message": "pong"})
-	   })
-
-	   // r.Run() parses the given address and then invoke http.ListenAndServe() register
-	   // an Engine instance into handler, also Engine type implements ServeHTTP(), so Engine
-	   // can be passed by a parameter.
-	   r.Run()
-	*/
-
-	// set run mode for Gin
-	gin.SetMode(global.ServerSetting.RunMode)
-
-	// create an Engine instance which is a handler
-	router := routers.NewRouter()
-
-	// create a http server by our own rules
-	ser := &http.Server{
-		Addr:           ":" + global.ServerSetting.HttpPort,
-		Handler:        router,
-		ReadTimeout:    global.ServerSetting.ReadTimeout,
-		WriteTimeout:   global.ServerSetting.WriteTimeout,
-		MaxHeaderBytes: 1 << 20,
-	}
-
-	// uncomment it to run
-	// global.Logger.Infof("This is a test message to test Info level.")
-
-	ser.ListenAndServe()
 }
