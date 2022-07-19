@@ -4,23 +4,23 @@ A blog backend program developed with Gin which integrates many useful features.
 
 ## Features
 
-- fully detailed notes and standard coding
+- Fully detailed notes and standard coding
 
-- interface validation and API access control
+- Interface validation and API access control
 
-- integrate middlewares like link tracing, scalable
+- Integrate middlewares like link tracing, scalable
 
-- support swagger API 
+- Support swagger API 
 
-- support application configuration
+- Support application configuration
 
-- graceful shutdown and boot
+- Graceful shutdown
 
-- support i18n
+- Support i18n
 
-- cross-platform
+- Cross-platform
 
-- find yourself
+- Find yourself
 
 ## Getting Started
 
@@ -31,7 +31,7 @@ A blog backend program developed with Gin which integrates many useful features.
 $ export GO111MODULE=on ; export GOPROXY=https://goproxy.cn
 
 # build & run
-$ go mod download ; make ; ./blogie -h
+$ go mod tidy ; make ; ./blogie -h
 
 Usage of ./blogie:
   -config string
@@ -52,70 +52,21 @@ In this part, we'll show you how this project work.
 
 TODO: picture of blogie.
 
-### Structure
-
-```console
-├── LICENSE
-├── Makefile
-├── README.md
-├── configs
-│   └── config.yaml
-├── docs
-│   ├── docs.go
-│   ├── swagger.json
-│   └── swagger.yaml
-├── global
-│   ├── db.go
-│   ├── setting.go
-│   ├── tracer.go
-│   └── validator.go
-├── go.mod
-├── go.sum
-├── images
-│   └── gin-demo.jpg
-├── internal
-│   ├── dao
-│   ├── middleware
-│   ├── model
-│   ├── routers
-│   └── service
-├── main.go
-├── pkg
-│   ├── app
-│   ├── convert
-│   ├── email
-│   ├── errcode
-│   ├── limiter
-│   ├── logger
-│   ├── setting
-│   ├── tracer
-│   └── upload
-├── scripts
-│   ├── install-mysql.sh
-│   └── sql
-├── storage
-│   ├── logs
-│   └── uploads
-├── third_party
-└── util
-    └── md5.go
-```
-
 ### Database
 
-Install MySQL first, and then create a database which named `blogie` and use this databse:
+You should install MySQL on your system first, and then create a database which named `blogie` and use this databse. If you have same system with mine(Unix), you can run the script directly to install and import blog.sql.
 
 ```shell
+# for Unix/Linux users
 # run command under the root folder of project
-$ ./scripts/install-mysql.sh # for macOS users
+# if you are macOS user, please make sure you have homebrew installed
+$ ./scripts/setup.sh
 
+# Or you want to setup it manually
 $ mysql -uroot -p
 mysql> CREATE DATABASE blogie;
 mysql> USE blogie;
 mysql> SOURCE ./doc/sql/blog.sql; # import blog.sql
-
-# after import auth.sql(contained in blog.sql), insert following sql
-mysql> INSERT INTO `blogie`.`blog_auth`(`id`, `app_key`, `app_secret`, `created_on`, `created_by`, `modified_on`, `modified_by`, `deleted_on`, `is_del`) VALUES (1, 'i0Ek3', 'blogie', 0, 'i0Ek3', 0, '', 0, 0);
 ```
 
 After import blog.sql, it will create following four tables:
@@ -169,7 +120,6 @@ Resonable error code is very easy to locate problems and locate lines of code. S
 | 20      | 01     | Tag error                 |
 | 20      | 02     | Article error             |
 | 20      | 03     | Upload error              |
-|         |        |                           |
 
 For example, the error code 100001 means a basic error(success), and the error code 100202 means token error. 
 
@@ -195,15 +145,15 @@ Add you should know something here, we add lumberjack into our project, so our p
 
 To ensure the standardization of the application, we will abstract the basic functions to the public component of the project.
 
-- error code standardization
+- Error code standardization
 
-- configuration management
+- Configuration management
 
-- database connection
+- Database connection
 
-- log writting
+- Log writting
 
-- response processing
+- Response processing
 
 ### Interface Generation
 
@@ -328,9 +278,9 @@ build_version: 1.0.0
 git_commit_id: xxxxxx
 ```
 
-### Graceful Shutdown/Boot
+### Graceful Shutdown
 
-In this project, we use signal to implement graceful shutdown and boot. On Unix/Linux platform, you can run command `kill -l` to check the signals of your system support. In our project, we accept two signals:
+In this project, we use signal to implement graceful shutdown. On Unix/Linux platform, you can run command `kill -l` to check the signals of your system support. In our project, we accept two signals:
 
 - syscall.SIGINT(2), also you can type Ctrl+C to interrupt the program
 
