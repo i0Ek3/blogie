@@ -5,12 +5,10 @@ import (
 	"net/http"
 )
 
-// Error indicates the response while error apperas
-// TODO: struct fields has json tag but is not exported
 type Error struct {
-	code    int      //`json:"code"`
-	msg     string   //`json:"msg"`
-	details []string //`json:"details"`
+	code    int
+	msg     string
+	details []string
 }
 
 var codes = map[int]string{}
@@ -46,9 +44,7 @@ func (e *Error) Details() []string {
 func (e *Error) WithDetails(details ...string) *Error {
 	newError := *e
 	newError.details = []string{}
-	for _, d := range details {
-		newError.details = append(newError.details, d)
-	}
+	newError.details = append(newError.details, details...)
 	return &newError
 }
 

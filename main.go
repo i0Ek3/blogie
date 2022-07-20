@@ -75,7 +75,7 @@ func init() {
 // @title blogie
 // @version 1.0
 // @description A blog backend program developed with Gin.
-//  @termOfService https://github.com/i0Ek3/blogie
+// @termOfService https://github.com/i0Ek3/blogie
 func main() {
 
 	/* Gin demo
@@ -123,7 +123,7 @@ func main() {
 	go func() {
 		err := ser.ListenAndServe()
 		if err != nil && err != http.ErrServerClosed {
-			log.Fatalf("ser.ListenAndServe err: %v", err)
+			log.Fatalf("main::ser.ListenAndServe err: %v", err)
 		}
 	}()
 

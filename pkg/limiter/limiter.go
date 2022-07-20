@@ -13,6 +13,7 @@ type LimiterIface interface {
 	AddBuckets(rules ...LimiterBucketRule) LimiterIface
 }
 
+// Limiter defines a map which used to map key-value pair to bucket
 type Limiter struct {
 	limiterBuckets map[string]*ratelimit.Bucket
 }

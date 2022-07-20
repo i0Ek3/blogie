@@ -14,6 +14,7 @@ type AccessLogWriter struct {
 	body *bytes.Buffer
 }
 
+// Write writes twice to get the data from body
 func (w AccessLogWriter) Write(p []byte) (int, error) {
 	if n, err := w.body.Write(p); err != nil {
 		return n, err

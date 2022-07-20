@@ -42,8 +42,6 @@ Usage of ./blogie:
         run in which port
 ```
 
-# 
-
 ## Architecture
 
 In this part, we'll show you how this project work.
@@ -190,13 +188,27 @@ After we developed of finished some features we want to the other people to see 
 
 There are two common API access control schemes on the market today, namely OAuth 2.0 and JWT(JSON Web Token). In our project, we choose JWT to provide access control for API interfaces.
 
-JWT contains three parts:
+JWT contains Header, Payload, Signature three parts:
 
-- Header
+```json
+Header {
+    "alg": "HS256", # HMAC SHA256
+    "typ": "JWT"
+}
 
-- Payload
+Payload { # mainly stored in the actual data transmitted in JWT
+    "sub": "Topic",
+    "name": "i0Ek3",
+    "admin": true
+}
 
-- Signature
+Signature # Signature of the agreed algorithm and rules for the first two parts (Header+Payload)
+   
+HMACSHA256(
+  base64UrlEncode(header) + "." +
+  base64UrlEncode(payload),
+  secret)
+```
 
 After you finished the access control, you can generate token by run following command:
 
@@ -258,7 +270,7 @@ You can complie program directly by using Go for different platforms.
 $ CGO_ENABLED=0 GOOS=linux go build -a -o blogie .
 
 # for Windows platform
-$ CGO_ENABLED=0 GOOS=windows go build -a -o blogie .
+$ CGO_ENABLED=0 GOOS=windows go build -a -o blogie.exe .
 
 # for macOS platform
 $ CGO_ENABLED=0 GOOS=darwin go build -a -o blogie .

@@ -13,6 +13,7 @@ func JWT() gin.HandlerFunc {
 			token string
 			ecode = errcode.Success
 		)
+		// fetch the param token from query or header field
 		if s, exist := c.GetQuery("token"); exist {
 			token = s
 		} else {

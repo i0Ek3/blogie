@@ -44,12 +44,13 @@ func NewRouter() *gin.Engine {
 	// upload file and access file on static address
 	upload := api.NewUpload()
 	r.POST("/upload/file", upload.UploadFile)
+
 	// NOTES: StaticFS() -> createStaticHandler() -> fileServer.ServerHTTP()
 	r.StaticFS("/static", http.Dir(global.AppSetting.UploadSavePath))
 
 	r.POST("/auth", api.GetAuth)
 
-	// Group Router
+	// group router
 	apiv1 := r.Group("/api/v1")
 	apiv1.Use(middleware.JWT())
 	{

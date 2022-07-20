@@ -7,8 +7,10 @@ import (
 	"github.com/juju/ratelimit"
 )
 
+// MethodLimiter used to rate limit for part of the routing
 type MethodLimiter struct {
 	*Limiter
+	LimiterIface
 }
 
 func NewMethodLimiter() LimiterIface {
@@ -17,6 +19,7 @@ func NewMethodLimiter() LimiterIface {
 	}
 }
 
+// Key returns the key-value name according URI
 func (l MethodLimiter) Key(c *gin.Context) string {
 	uri := c.Request.RequestURI
 	index := strings.Index(uri, "?")
