@@ -14,11 +14,9 @@ A blog backend program developed with Gin which integrates many useful features.
 
 - Support application configuration
 
-- Graceful shutdown
+- Graceful shutdown and restart
 
-- Support i18n
-
-- Cross-platform
+- Support i18n and cross-platform
 
 - Find yourself
 
@@ -46,7 +44,7 @@ Usage of ./blogie:
 
 In this part, we'll show you how this project work.
 
-TODO
+> TODO
 
 ### Database
 
@@ -123,15 +121,15 @@ For example, the error code 100001 means a basic error(success), and the error c
 
 In our project, we support seven log levels: Trace, Debug, Info, Warn, Error, Fatal and Panic. But for Trace level, only for learning purpose, so decide it according your own purpose.
 
-| Level | Details |
-| ----- | ------- |
-| Trace |         |
-| Debug |         |
-| Info  |         |
-| Warn  |         |
-| Error |         |
-| Panic |         |
-| Fatal |         |
+| Level | Details                                                                                                                                                |
+| ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Trace | Trace have ability to print more fine-grained log information than debug level.                                                                        |
+| Debug | It is used to provide some debuf information, which is convenient for us to locate the problem and observe whether the program meets the expectations. |
+| Info  | Default logger level, provide some necessary log information to facilitate troubleshooting.                                                            |
+| Warn  | More important than Info level.                                                                                                                        |
+| Error | It indicates an error in program execution.                                                                                                            |
+| Panic | It indicates that there is a serious error in the program, usually the stack information is printed out, and can also be caught.                       |
+| Fatal | It indicates that the program encountered a fatal error and needs to exit.                                                                             |
 
 Also our logger support output the log into file and os.Stdout.
 
@@ -190,7 +188,7 @@ There are two common API access control schemes on the market today, namely OAut
 
 JWT contains Header, Payload, Signature three parts:
 
-```json
+```Console
 Header {
     "alg": "HS256", # HMAC SHA256
     "typ": "JWT"
@@ -203,7 +201,7 @@ Payload { # mainly stored in the actual data transmitted in JWT
 }
 
 Signature # Signature of the agreed algorithm and rules for the first two parts (Header+Payload)
-   
+
 HMACSHA256(
   base64UrlEncode(header) + "." +
   base64UrlEncode(payload),
@@ -288,9 +286,9 @@ build_version: 1.0.0
 git_commit_id: xxxxxx
 ```
 
-### Graceful Shutdown
+### Graceful Shutdown/Restart
 
-In this project, we use signal to implement graceful shutdown. On Unix/Linux platform, you can run command `kill -l` to check the signals of your system support. In our project, we accept two signals:
+In this project, we use signal to implement graceful shutdown and restart. On Unix/Linux platform, you can run command `kill -l` to check the signals of your system support. In our project, we accept two signals:
 
 - syscall.SIGINT(2), also you can type Ctrl+C to interrupt the program
 

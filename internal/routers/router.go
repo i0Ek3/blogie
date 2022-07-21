@@ -44,7 +44,14 @@ func NewRouter() *gin.Engine {
 	// upload file and access file on static address
 	upload := api.NewUpload()
 	r.POST("/upload/file", upload.UploadFile)
-
+	/*r.POST("/upload/files", func(c *gin.Context) {
+		form, _ := c.MultipartForm()
+		files := form.File["upload[]"]
+		for _, file := range files {
+			log.Println(file.Filename)
+		}
+		c.String(http.StatusOK, "%d files uploaded!", len(files))
+	})*/
 	// NOTES: StaticFS() -> createStaticHandler() -> fileServer.ServerHTTP()
 	r.StaticFS("/static", http.Dir(global.AppSetting.UploadSavePath))
 
