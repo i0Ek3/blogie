@@ -47,7 +47,7 @@ func (a ArticleTag) Create(db *gorm.DB) error {
 	return nil
 }
 
-func (a ArticleTag) UpdateOne(db *gorm.DB, values interface{}) error {
+func (a ArticleTag) UpdateOne(db *gorm.DB, values any) error {
 	if err := db.Model(&a).Where("article_id = ? AND is_del = ?", a.ArticleID, 0).Limit(1).Updates(values).Error; err != nil {
 		return err
 	}

@@ -51,7 +51,7 @@ func bindAndValid(c *gin.Context, err error) (bool, ValidErrors) {
 	return true, nil
 }
 
-func BindAndValid(c *gin.Context, v interface{}) (bool, ValidErrors) {
+func BindAndValid(c *gin.Context, v any) (bool, ValidErrors) {
 	err := c.ShouldBindJSON(v)
 	if err != nil && err.Error() == "EOF" {
 		err = c.ShouldBind(v)
@@ -59,7 +59,7 @@ func BindAndValid(c *gin.Context, v interface{}) (bool, ValidErrors) {
 	return bindAndValid(c, err)
 }
 
-func BindAndValidHeader(c *gin.Context, v interface{}) (bool, ValidErrors) {
+func BindAndValidHeader(c *gin.Context, v any) (bool, ValidErrors) {
 	err := c.ShouldBindHeader(v)
 	return bindAndValid(c, err)
 }

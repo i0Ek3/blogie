@@ -30,7 +30,7 @@ func (d *Dao) CreateArticleTag(articleID, tagID uint32, createdBy string) error 
 
 func (d *Dao) UpdateArticleTag(articleID, tagID uint32, modifiedBy string) error {
 	articleTag := model.ArticleTag{ArticleID: articleID}
-	values := map[string]interface{}{
+	values := map[string]any{
 		"article_id":  articleID,
 		"tag_id":      tagID,
 		"modified_by": modifiedBy,

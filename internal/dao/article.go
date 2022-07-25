@@ -35,7 +35,7 @@ func (d *Dao) UpdateArticle(param *Article) error {
 	// fetch the article id first
 	article := model.Article{Model: &model.Model{ID: param.ID}}
 	// construct fields
-	values := map[string]interface{}{
+	values := map[string]any{
 		"modified_by": param.ModifiedBy,
 		"state":       param.State,
 	}

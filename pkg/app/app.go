@@ -24,7 +24,7 @@ func NewResponse(ctx *gin.Context) *Response {
 }
 
 // ToResponse converts any valid data into a response body
-func (r *Response) ToResponse(data interface{}) {
+func (r *Response) ToResponse(data any) {
 	if data == nil {
 		data = gin.H{}
 	}
@@ -32,7 +32,7 @@ func (r *Response) ToResponse(data interface{}) {
 }
 
 // ToResponseList converts a data list into a response list
-func (r *Response) ToResponseList(list interface{}, totalRows int) {
+func (r *Response) ToResponseList(list any, totalRows int) {
 	r.Ctx.JSON(http.StatusOK, gin.H{
 		"list": list,
 		"pager": Pager{

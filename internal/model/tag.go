@@ -75,7 +75,7 @@ func (t Tag) Create(db *gorm.DB) error {
 	return db.Create(&t).Error
 }
 
-func (t Tag) Update(db *gorm.DB, values interface{}) error {
+func (t Tag) Update(db *gorm.DB, values any) error {
 	if err := db.Model(t).Where("id = ? AND is_del = ?", t.ID, 0).Update(values).Error; err != nil {
 		return err
 	}

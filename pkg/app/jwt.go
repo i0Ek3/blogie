@@ -39,7 +39,7 @@ func GenerateToken(appKey, appSecret string) (string, error) {
 
 // ParseToken parses into a tokenClaims and validates that token according Claims
 func ParseToken(token string) (*Claims, error) {
-	tokenClaims, err := jwt.ParseWithClaims(token, &Claims{}, func(token *jwt.Token) (interface{}, error) {
+	tokenClaims, err := jwt.ParseWithClaims(token, &Claims{}, func(token *jwt.Token) (any, error) {
 		return GetJWTSecret(), nil
 	})
 	if err != nil {

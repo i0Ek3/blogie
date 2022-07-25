@@ -26,7 +26,7 @@ type Logger struct {
 type Level int8
 
 // Fields denotes a logger field
-type Fields map[string]interface{}
+type Fields map[string]any
 
 const (
 	// Trace level is a finer-grained log level than Debug

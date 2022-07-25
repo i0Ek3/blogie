@@ -40,7 +40,7 @@ func (d *Dao) UpdateTag(id uint32, name string, state *uint8, modifiedBy string)
 		"modified_by": modifiedBy,
 	}*/
 
-	values := map[string]interface{}{
+	values := map[string]any{
 		"state":       state,
 		"modified_by": modifiedBy,
 	}

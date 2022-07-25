@@ -4,6 +4,8 @@ A blog backend program developed with Gin which integrates many useful features.
 
 ## Features
 
+- Compatible 1.18+
+
 - Fully detailed notes and standard coding
 
 - Interface validation and API access control

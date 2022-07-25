@@ -16,7 +16,7 @@ func NewCustomValidator() *CustomValidator {
 	return &CustomValidator{}
 }
 
-func (v *CustomValidator) ValidateStruct(obj interface{}) error {
+func (v *CustomValidator) ValidateStruct(obj any) error {
 	if kindOfData(obj) == reflect.Struct {
 		v.lazyinit()
 		if err := v.Validate.Struct(obj); err != nil {
@@ -27,7 +27,7 @@ func (v *CustomValidator) ValidateStruct(obj interface{}) error {
 	return nil
 }
 
-func (v *CustomValidator) Engine() interface{} {
+func (v *CustomValidator) Engine() any {
 	v.lazyinit()
 	return v.Validate
 }
@@ -39,7 +39,7 @@ func (v *CustomValidator) lazyinit() {
 	})
 }
 
-func kindOfData(data interface{}) reflect.Kind {
+func kindOfData(data any) reflect.Kind {
 	value := reflect.ValueOf(data)
 	valueType := value.Kind()
 

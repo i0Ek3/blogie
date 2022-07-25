@@ -77,24 +77,6 @@ func init() {
 // @description A blog backend program developed with Gin.
 // @termOfService https://github.com/i0Ek3/blogie
 func main() {
-
-	/* Gin demo
-	   // gin.Default() -> gin.New() -> Logger/Recovery -> r.GET() -> r.Run()
-	   // gin.Default() use to create an Engine instance which import Logger and Recovery middleware.
-	   // gin.New() initializes Engine instance and return.
-	   r := gin.Default()
-
-	   // r.GET() registers /ping router into handler.
-	   r.GET("/ping", func(c *gin.Context) {
-	       c.JSON(200, gin.H{"message": "pong"})
-	   })
-
-	   // r.Run() parses the given address and then invoke http.ListenAndServe() register
-	   // an Engine instance into handler, also Engine type implements ServeHTTP(), so Engine
-	   // can be passed by a parameter.
-	   r.Run()
-	*/
-
 	if isVersion {
 		fmt.Printf("build_time: %s\n", buildTime)
 		fmt.Printf("build_version: %s\n", buildVersion)
@@ -116,9 +98,6 @@ func main() {
 		WriteTimeout:   global.ServerSetting.WriteTimeout,
 		MaxHeaderBytes: 1 << 20,
 	}
-
-	// uncomment it to run
-	// global.Logger.Infof("This is a test message to test Info level.")
 
 	go func() {
 		err := ser.ListenAndServe()
