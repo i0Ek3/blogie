@@ -15,7 +15,8 @@ var codes = map[int]string{}
 
 func NewError(code int, msg string) *Error {
 	if _, ok := codes[code]; ok {
-		panic(fmt.Sprintf("error code %d already exist, change to another", code))
+		message := fmt.Sprintf("error code %d already exist, change to another", code)
+		panic(any(message))
 	}
 	codes[code] = msg
 	return &Error{code: code, msg: msg}
@@ -51,9 +52,9 @@ func (e *Error) WithDetails(details ...string) *Error {
 // StatusCode converts common error code into http status code
 func (e *Error) StatusCode() int {
 	switch e.Code() {
-	case Success.Code(): // 200
+	case Success.Code():
 		return http.StatusOK
-	case InternalServerError.Code(): // 500
+	case InternalServerError.Code():
 		return http.StatusInternalServerError
 	case InvalidParams.Code(): // 400
 		return http.StatusBadRequest

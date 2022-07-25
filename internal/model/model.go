@@ -13,11 +13,11 @@ import (
 )
 
 const (
-	STATE_OPEN  = 1
-	STATE_CLOSE = 0
+	StateOpen  = 1
+	StateClose = 0
 )
 
-// same with database table
+// Model same with database table
 type Model struct {
 	ID         uint32 `gorm:"primary_key" json:"id"`
 	CreatedBy  string `json:"created_by"`

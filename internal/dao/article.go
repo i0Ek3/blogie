@@ -55,7 +55,7 @@ func (d *Dao) UpdateArticle(param *Article) error {
 	return article.Update(d.engine, values)
 }
 
-// GetArticle gets the article according it's id and state
+// GetArticle gets the article according its id and state
 func (d *Dao) GetArticle(id uint32, state uint8) (model.Article, error) {
 	article := model.Article{Model: &model.Model{ID: id}, State: state}
 	return article.Get(d.engine)

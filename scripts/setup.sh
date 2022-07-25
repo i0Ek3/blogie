@@ -13,7 +13,7 @@ install_mysql_then_import() {
         sudo apt update ; sudo apt install -y mysql
         sudo service mysql start
     else
-        echo "Unsupport platform!"
+        echo "Unsupported platform!"
     fi
     sudo mysql -u root -p < ./sql/blog.sql
 }

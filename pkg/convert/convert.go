@@ -1,4 +1,4 @@
-// package convert offers a series of methods to convert string to the other type
+// Package convert offers a series of methods to convert string to the other type
 package convert
 
 import "strconv"

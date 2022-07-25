@@ -62,7 +62,7 @@ func (svc *Service) GetArticle(param *ArticleRequest) (*Article, error) {
 		return nil, err
 	}
 
-	tag, err := svc.dao.GetTag(articleTag.TagID, model.STATE_OPEN)
+	tag, err := svc.dao.GetTag(articleTag.TagID, model.StateOpen)
 	if err != nil {
 		return nil, err
 	}

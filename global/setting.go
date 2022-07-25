@@ -6,13 +6,13 @@ import (
 )
 
 var (
-	// set global settings
+	// ServerSetting set global settings
 	ServerSetting   *setting.ServerSettingS
 	AppSetting      *setting.AppSettingS
 	DatabaseSetting *setting.DatabaseSettingS
 	JWTSetting      *setting.JWTSettingS
 	EmailSetting    *setting.EmailSettingS
 
-	// defined a logger object
+	// Logger defines a logger object
 	Logger *logger.Logger
 )

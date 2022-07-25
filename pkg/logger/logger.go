@@ -29,7 +29,7 @@ type Level int8
 type Fields map[string]any
 
 const (
-	// Trace level is a finer-grained log level than Debug
+	// LevelTrace is a finer-grained log level
 	LevelTrace Level = iota
 	LevelDebug
 	LevelInfo

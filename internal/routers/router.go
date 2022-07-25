@@ -16,7 +16,7 @@ import (
 	_ "github.com/i0Ek3/blogie/docs"
 )
 
-var methodLimiters = limiter.NewMethodLimiter().AddBuckets(limiter.LimiterBucketRule{
+var methodLimiters = limiter.NewMethodLimiter().AddBuckets(limiter.BucketRule{
 	Key:          "/auth",
 	FillInterval: time.Second,
 	Capacity:     10,
@@ -38,20 +38,14 @@ func NewRouter() *gin.Engine {
 	r.Use(middleware.Tracing())
 	r.Use(middleware.Translations())
 
+	r.GET("debug/vars", api.Expvar)
+
 	url := ginSwagger.URL("http://127.0.0.1:8080/swagger/doc.json")
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
 
 	// upload file and access file on static address
 	upload := api.NewUpload()
 	r.POST("/upload/file", upload.UploadFile)
-	/*r.POST("/upload/files", func(c *gin.Context) {
-		form, _ := c.MultipartForm()
-		files := form.File["upload[]"]
-		for _, file := range files {
-			log.Println(file.Filename)
-		}
-		c.String(http.StatusOK, "%d files uploaded!", len(files))
-	})*/
 	// NOTES: StaticFS() -> createStaticHandler() -> fileServer.ServerHTTP()
 	r.StaticFS("/static", http.Dir(global.AppSetting.UploadSavePath))
 

@@ -34,12 +34,6 @@ func (d *Dao) UpdateTag(id uint32, name string, state *uint8, modifiedBy string)
 	tag := model.Tag{
 		Model: &model.Model{ID: id},
 	}
-
-	/*v := gin.H{
-		"state":       state,
-		"modified_by": modifiedBy,
-	}*/
-
 	values := map[string]any{
 		"state":       state,
 		"modified_by": modifiedBy,

@@ -10,7 +10,7 @@ import (
 type LimiterIface interface {
 	Key(c *gin.Context) string
 	GetBucket(key string) (*ratelimit.Bucket, bool)
-	AddBuckets(rules ...LimiterBucketRule) LimiterIface
+	AddBuckets(rules ...BucketRule) LimiterIface
 }
 
 // Limiter defines a map which used to map key-value pair to bucket
@@ -18,7 +18,7 @@ type Limiter struct {
 	limiterBuckets map[string]*ratelimit.Bucket
 }
 
-type LimiterBucketRule struct {
+type BucketRule struct {
 	Key          string
 	FillInterval time.Duration
 	Capacity     int64

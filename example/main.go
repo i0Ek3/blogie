@@ -7,7 +7,7 @@ import (
 func main() {
 
 	// gin.Default() -> gin.New() -> Logger/Recovery -> r.GET() -> r.Run()
-	// gin.Default() use to create an Engine instance which import Logger and Recovery middleware.
+	// gin.Default() used to create an Engine instance which import Logger and Recovery middleware.
 	// gin.New() initializes Engine instance and return.
 	r := gin.Default()
 
@@ -22,5 +22,5 @@ func main() {
 	// r.Run() parses the given address and then invoke http.ListenAndServe() register
 	// an Engine instance into handler, also Engine type implements ServeHTTP(), so Engine
 	// can be passed by a parameter.
-	r.Run()
+	_ = r.Run()
 }

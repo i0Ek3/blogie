@@ -18,7 +18,7 @@ func NewCustomValidator() *CustomValidator {
 
 func (v *CustomValidator) ValidateStruct(obj any) error {
 	if kindOfData(obj) == reflect.Struct {
-		v.lazyinit()
+		v.lazyInit()
 		if err := v.Validate.Struct(obj); err != nil {
 			return err
 		}
@@ -28,11 +28,11 @@ func (v *CustomValidator) ValidateStruct(obj any) error {
 }
 
 func (v *CustomValidator) Engine() any {
-	v.lazyinit()
+	v.lazyInit()
 	return v.Validate
 }
 
-func (v *CustomValidator) lazyinit() {
+func (v *CustomValidator) lazyInit() {
 	v.Once.Do(func() {
 		v.Validate = v10.New()
 		v.Validate.SetTagName("binding")
