@@ -1,11 +1,14 @@
 package middleware
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/i0Ek3/blogie/pkg/version"
+)
 
 func AppInfo() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.Set("app_name", "blogie")
-		c.Set("app_version", "1.0.0")
+		c.Set("app_name", version.AppName)
+		c.Set("app_version", version.Version)
 		c.Next()
 	}
 }

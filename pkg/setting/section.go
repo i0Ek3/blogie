@@ -58,6 +58,10 @@ type EmailSettingS struct {
 	To       []string
 }
 
+type EnableSettingS struct {
+	Enable bool
+}
+
 var sections = make(map[string]any)
 
 func (s *Setting) ReadSection(k string, v any) error {

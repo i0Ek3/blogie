@@ -9,7 +9,7 @@ import (
 	"strings"
 
 	"github.com/i0Ek3/blogie/global"
-	"github.com/i0Ek3/blogie/util"
+	"github.com/i0Ek3/blogie/pkg/util"
 )
 
 const MB = 1024 * 1024

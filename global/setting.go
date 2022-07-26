@@ -12,6 +12,7 @@ var (
 	DatabaseSetting *setting.DatabaseSettingS
 	JWTSetting      *setting.JWTSettingS
 	EmailSetting    *setting.EmailSettingS
+	EnableSetting   *setting.EnableSettingS
 
 	// Logger defines a logger object
 	Logger *logger.Logger

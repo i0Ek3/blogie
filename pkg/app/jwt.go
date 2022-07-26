@@ -5,7 +5,7 @@ import (
 
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/i0Ek3/blogie/global"
-	"github.com/i0Ek3/blogie/util"
+	"github.com/i0Ek3/blogie/pkg/util"
 )
 
 type Claims struct {

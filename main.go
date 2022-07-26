@@ -31,13 +31,9 @@ import (
 )
 
 var (
-	port         string
-	runMode      string
-	config       string
-	isVersion    bool
-	buildTime    string
-	buildVersion string
-	gitCommitID  string
+	port    string
+	runMode string
+	config  string
 )
 
 func init() {
@@ -77,13 +73,6 @@ func init() {
 // @description A blog backend program developed with Gin.
 // @termOfService https://github.com/i0Ek3/blogie
 func main() {
-	if isVersion {
-		fmt.Printf("build_time: %s\n", buildTime)
-		fmt.Printf("build_version: %s\n", buildVersion)
-		fmt.Printf("git_commit_id: %s\n", gitCommitID)
-		return
-	}
-
 	// set run mode for Gin
 	gin.SetMode(global.ServerSetting.RunMode)
 
@@ -121,6 +110,19 @@ func main() {
 }
 
 func setupFlag() error {
+	var (
+		isVersion    bool
+		buildTime    string
+		buildVersion string
+		gitCommitID  string
+	)
+
+	if isVersion {
+		fmt.Printf("build_time: %s\n", buildTime)
+		fmt.Printf("build_version: %s\n", buildVersion)
+		fmt.Printf("git_commit_id: %s\n", gitCommitID)
+	}
+
 	flag.StringVar(&port, "port", "", "run in which port")
 	flag.StringVar(&runMode, "mode", "", "run in which mode")
 	flag.StringVar(&config, "config", "configs/", "specify config path")
@@ -157,6 +159,11 @@ func setupSetting() error {
 	}
 
 	err = s.ReadSection("Email", &global.EmailSetting)
+	if err != nil {
+		return err
+	}
+
+	err = s.ReadSection("Enable", &global.EnableSetting)
 	if err != nil {
 		return err
 	}

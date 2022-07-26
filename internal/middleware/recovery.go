@@ -25,13 +25,15 @@ func Recovery() gin.HandlerFunc {
 			if err := recover(); err != any(nil) {
 				global.Logger.WithCallersFrames().Errorf(c, "panic recover err: %v", err)
 
-				err := defaultMailer.SendMailTo(
-					global.EmailSetting.To,
-					fmt.Sprintf("panic appeared at: %d", time.Now().Unix()),
-					fmt.Sprintf("error message: %v", err),
-				)
-				if err != nil {
-					global.Logger.Panicf(c, "mail.SendMail err: %v", err)
+				if global.EnableSetting.Enable {
+					err := defaultMailer.SendMailTo(
+						global.EmailSetting.To,
+						fmt.Sprintf("panic appeared at: %d", time.Now().Unix()),
+						fmt.Sprintf("error message: %v", err),
+					)
+					if err != nil {
+						global.Logger.Panicf(c, "mail.SendMail err: %v", err)
+					}
 				}
 
 				app.NewResponse(c).ToErrorResponse(errcode.InternalServerError)
