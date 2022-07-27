@@ -3,6 +3,7 @@ package setting
 import (
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
+	"log"
 )
 
 type Setting struct {
@@ -31,9 +32,12 @@ func NewSetting(configs ...string) (*Setting, error) {
 func (s *Setting) WatchSettingChange() {
 	go func() {
 		s.vp.WatchConfig()
-		// TODO: unused parameter in
+		// in is callback parameter in OnConfigChange
 		s.vp.OnConfigChange(func(in fsnotify.Event) {
-			_ = s.ReloadAllSection()
+			err := s.ReloadAllSection()
+			if err != nil {
+				log.Fatalf("section reload failed: %v", err)
+			}
 		})
 	}()
 }

@@ -75,6 +75,7 @@ func (s *Setting) ReadSection(k string, v any) error {
 	return nil
 }
 
+// ReloadAllSection is hot update reload callback
 func (s *Setting) ReloadAllSection() error {
 	for k, v := range sections {
 		err := s.ReadSection(k, v)

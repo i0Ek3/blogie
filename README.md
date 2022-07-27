@@ -245,7 +245,11 @@ The mutual influence of upstream and downstream applications leads to a serial r
 
 ### Link Tracking
 
-In this part, we use Jaeger to implement link tracking which support OpenTracing specfication.
+In this part, we use Jaeger to implement link tracking which support OpenTracing specfication. 
+
+Usually, when multiple distributed interfaces call each other and the response is particularly slow, we need to locate and solve the problem in time. Therefore, we need to do link tracing.
+
+> Please install and boot docker first.
 
 First, we use docker to install Jaeger with following command:
 
@@ -255,11 +259,26 @@ $ docker run -d --name jaeger -e COLLECTOR_ZIPKIN_HTTP_PORT=9411 -p 5775:5775/ud
 ne:latest
 ```
 
-And then, you can open `http://localhost:16686/` to check Jaeger's Web UI. 
+And then, after you run the blogie service, you can open `http://localhost:16686/` to check Jaeger's Web UI to tracing interface calls.
+
+Also you can run the command `docker-compose up -d` under the root folder to enable Jaeger.
 
 ### Application Configuration
 
-We use fsnotify package to solve config reading issue.
+#### Config Reading
+
+In fact, we cannot run the Go program directly in other directories, because it will prompt that the configuration file cannot be found. So, if you want to pack config.yaml into execute binary, you can run following command:
+
+```Go
+$ go get -u github.com/go-bindata/go-bindata/...
+$ go-bindata -o configs/config.go -pkg=configs configs/config.yaml
+```
+
+Or, just use commond-line argument to pass the parameters.
+
+#### Configure Hot Update
+
+We use fsnotify package to solve config hot update issue.
 
 ### Complie Program
 
