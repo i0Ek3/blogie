@@ -111,7 +111,7 @@ func (l *Logger) WithCallersFrames() *Logger {
 	maxCallerDepth := 25
 	minCallerDepth := 1
 
-	callers := []string{}
+	var callers []string
 	pcs := make([]uintptr, maxCallerDepth)
 	depth := runtime.Callers(minCallerDepth, pcs)
 	frames := runtime.CallersFrames(pcs[:depth])

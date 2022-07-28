@@ -24,6 +24,15 @@ func (t Tag) TableName() string {
 	return "blog_tag"
 }
 
+func (t Tag) Get(db *gorm.DB) (Tag, error) {
+	var tag Tag
+	err := db.Where("id = ? AND is_del = ? AND state = ?", t.ID, 0, t.State).First(&tag).Error
+	if err != nil && err != gorm.ErrRecordNotFound {
+		return tag, err
+	}
+	return tag, nil
+}
+
 func (t Tag) Count(db *gorm.DB) (int, error) {
 	var count int
 	if t.Name != "" {
@@ -62,21 +71,12 @@ func (t Tag) ListByIDs(db *gorm.DB, ids []uint32) ([]*Tag, error) {
 	return tags, nil
 }
 
-func (t Tag) Get(db *gorm.DB) (Tag, error) {
-	var tag Tag
-	err := db.Where("id = ? AND is_del = ? AND state = ?", t.ID, 0, t.State).First(&tag).Error
-	if err != nil && err != gorm.ErrRecordNotFound {
-		return tag, err
-	}
-	return tag, nil
-}
-
 func (t Tag) Create(db *gorm.DB) error {
 	return db.Create(&t).Error
 }
 
 func (t Tag) Update(db *gorm.DB, values any) error {
-	if err := db.Model(t).Where("id = ? AND is_del = ?", t.ID, 0).Update(values).Error; err != nil {
+	if err := db.Model(t).Where("id = ? AND is_del = ?", t.ID, 0).Updates(values).Error; err != nil {
 		return err
 	}
 	return nil

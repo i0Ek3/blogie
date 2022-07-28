@@ -27,11 +27,8 @@ A blog backend program developed with Gin which integrates many useful features.
 ### How-To(Build & Run)
 
 ```shell
-# required
-$ export GO111MODULE=on ; export GOPROXY=https://goproxy.cn
-
-# build & run
-$ go mod tidy ; make ; ./blogie -h
+# Please make sure docker is running
+$ make ; ./blogie -h
 
 Usage of ./blogie:
   -config string
@@ -102,6 +99,8 @@ We use RESTful style to design our API.
 | Update specify article | PUT         | /articles/:id |
 | Get specify article    | GET         | /articles/:id |
 | Get article list       | GET         | /articles     |
+
+After that, you can use `curl` to test your APIs. If you don't know how to test you APIs with `curl`, you can check this [post](http://www.ruanyifeng.com/blog/2019/09/curl-reference.html) or just run script `./scripts/test.sh`.
 
 ### Error Code
 
@@ -339,10 +338,7 @@ In this project, we use signal to implement graceful shutdown and restart. On Un
   
   - use command `curlie -X POST http://127.0.0.1:8080/upload/file -F file=@./demo.jpg -F type=1` to solve it
 
-## Reference
 
-- Project [iam](https://github.com/marmotedu/iam)
+## Credit
 
-- Project demon
-
-- Project [go-programming-tour-book](https://github.com/go-programming-tour-book)
+[marmotedu](https://github.com/marmotedu) | [eddycjy](https://github.com/eddycjy) | [minibear2333](https://github.com/golang-minibear2333) | demon

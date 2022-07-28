@@ -9,7 +9,8 @@ import (
 
 // JSONFormat formats the given information into a log field
 func (l *Logger) JSONFormat(level Level, msg string) map[string]any {
-	data := make(Fields, len(l.fields)+4) // why here need plus 4?
+	// plus 4 means to add four attributes of data
+	data := make(Fields, len(l.fields)+4)
 	data["level"] = level.String()
 	data["time"] = time.Now().Local().UnixNano()
 	data["message"] = msg

@@ -4,6 +4,7 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"github.com/i0Ek3/blogie/pkg/version"
 	"log"
 	"net/http"
 	"os"
@@ -139,31 +140,37 @@ func setupSetting() error {
 	}
 
 	err = s.ReadSection("Server", &global.ServerSetting)
+	//fmt.Println("DEBUG------->global.ServerSetting", global.ServerSetting)
 	if err != nil {
 		return err
 	}
 
 	err = s.ReadSection("App", &global.AppSetting)
+	//fmt.Println("DEBUG------->global.AppSetting", global.AppSetting)
 	if err != nil {
 		return err
 	}
 
 	err = s.ReadSection("Database", &global.DatabaseSetting)
+	//fmt.Println("DEBUG------->global.DatabaseSetting", global.DatabaseSetting)
 	if err != nil {
 		return err
 	}
 
 	err = s.ReadSection("JWT", &global.JWTSetting)
+	//fmt.Println("DEBUG------->global.JWTSetting", global.JWTSetting)
 	if err != nil {
 		return err
 	}
 
 	err = s.ReadSection("Email", &global.EmailSetting)
+	//fmt.Println("DEBUG------->global.EmailSetting", global.EmailSetting)
 	if err != nil {
 		return err
 	}
 
 	err = s.ReadSection("Enable", &global.EnableSetting)
+	//fmt.Println("DEBUG------->global.EnableSetting", global.EnableSetting)
 	if err != nil {
 		return err
 	}
@@ -195,8 +202,8 @@ func setupDBEngine() error {
 func setupLogger() error {
 	global.Logger = logger.NewLogger(&lumberjack.Logger{
 		Filename:  global.AppSetting.LogSavePath + "/" + global.AppSetting.LogFileName + global.AppSetting.LogFileExt,
-		MaxSize:   600, // maximum size, megabytes
-		MaxAge:    10,  // retain days
+		MaxSize:   100, // maximum size, megabytes
+		MaxAge:    7,  // retain days
 		LocalTime: true,
 	}, "", log.LstdFlags)
 
@@ -205,7 +212,7 @@ func setupLogger() error {
 
 func setupTracer() error {
 	jaegerTracer, _, err := tracer.NewJaegerTracer(
-		"blogie",
+		version.AppName,
 		"127.0.0.1:6831",
 	)
 	if err != nil {

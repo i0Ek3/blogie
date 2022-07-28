@@ -60,6 +60,7 @@ type EmailSettingS struct {
 
 type EnableSettingS struct {
 	Enable bool
+	Debug  bool
 }
 
 var sections = make(map[string]any)

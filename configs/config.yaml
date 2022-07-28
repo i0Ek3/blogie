@@ -52,3 +52,4 @@ Email:
 # Global Enable config
 Enable:
   Enable: false
+  Debug: true

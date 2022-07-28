@@ -440,41 +440,6 @@ const docTemplate = `{
             }
         },
         "/api/v1/tags/{id}": {
-            "get": {
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "Get A Tag",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "tag id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "success",
-                        "schema": {
-                            "$ref": "#/definitions/model.TagSwagger"
-                        }
-                    },
-                    "400": {
-                        "description": "request error",
-                        "schema": {
-                            "$ref": "#/definitions/errcode.Error"
-                        }
-                    },
-                    "500": {
-                        "description": "internal server error",
-                        "schema": {
-                            "$ref": "#/definitions/errcode.Error"
-                        }
-                    }
-                }
-            },
             "put": {
                 "produces": [
                     "application/json"
@@ -683,20 +648,6 @@ const docTemplate = `{
                 },
                 "state": {
                     "type": "integer"
-                }
-            }
-        },
-        "model.TagSwagger": {
-            "type": "object",
-            "properties": {
-                "list": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.Tag"
-                    }
-                },
-                "pager": {
-                    "$ref": "#/definitions/app.Pager"
                 }
             }
         }

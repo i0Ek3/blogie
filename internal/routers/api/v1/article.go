@@ -6,6 +6,7 @@ import (
 	"github.com/i0Ek3/blogie/internal/service"
 	"github.com/i0Ek3/blogie/pkg/app"
 	"github.com/i0Ek3/blogie/pkg/convert"
+	"github.com/i0Ek3/blogie/pkg/debug"
 	"github.com/i0Ek3/blogie/pkg/errcode"
 )
 
@@ -23,6 +24,7 @@ func NewArticle() Article {
 // @Failure 500 {object} errcode.Error "internal server error"
 // @Router /api/v1/articles/{id} [get]
 func (a Article) Get(c *gin.Context) {
+	debug.DebugHere("article::", "Get")
 	param := service.ArticleRequest{ID: convert.StrTo(c.Param("id")).MustUInt32()}
 	response := app.NewResponse(c)
 	valid, errs := app.BindAndValid(c, &param)
@@ -55,6 +57,7 @@ func (a Article) Get(c *gin.Context) {
 // @Failure 500 {object} errcode.Error "internal server error"
 // @Router /api/v1/articles [get]
 func (a Article) List(c *gin.Context) {
+	debug.DebugHere("article::", "List")
 	param := service.ArticleListRequest{}
 	response := app.NewResponse(c)
 	valid, errs := app.BindAndValid(c, &param)
@@ -90,6 +93,7 @@ func (a Article) List(c *gin.Context) {
 // @Failure 500 {object} errcode.Error "internal server error"
 // @Router /api/v1/articles [post]
 func (a Article) Create(c *gin.Context) {
+	debug.DebugHere("article::", "Create")
 	param := service.CreateArticleRequest{}
 	response := app.NewResponse(c)
 	valid, errs := app.BindAndValid(c, &param)
@@ -123,6 +127,7 @@ func (a Article) Create(c *gin.Context) {
 // @Failure 500 {object} errcode.Error "internal server error"
 // @Router /api/v1/articles/{id} [put]
 func (a Article) Update(c *gin.Context) {
+	debug.DebugHere("article::", "Update")
 	param := service.UpdateArticleRequest{ID: convert.StrTo(c.Param("id")).MustUInt32()}
 	response := app.NewResponse(c)
 	valid, errs := app.BindAndValid(c, &param)
@@ -146,11 +151,12 @@ func (a Article) Update(c *gin.Context) {
 // @Summary Delete An Article
 // @Produce json
 // @Param id path int true "article id"
-// @Success 200 {object} model.Article "success"
+// @Success 200 {object} string "success"
 // @Failure 400 {object} errcode.Error "request error"
 // @Failure 500 {object} errcode.Error "internal server error"
 // @Router /api/v1/articles/{id} [delete]
 func (a Article) Delete(c *gin.Context) {
+	debug.DebugHere("article::", "Delete")
 	param := service.DeleteArticleRequest{ID: convert.StrTo(c.Param("id")).MustUInt32()}
 	response := app.NewResponse(c)
 	valid, errs := app.BindAndValid(c, &param)

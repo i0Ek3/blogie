@@ -13,11 +13,11 @@ type ValidError struct {
 	Message string
 }
 
-type ValidErrors []*ValidError
-
 func (v *ValidError) Error() string {
 	return v.Message
 }
+
+type ValidErrors []*ValidError
 
 func (v *ValidErrors) Error() string {
 	return strings.Join(v.Errors(), ",")
