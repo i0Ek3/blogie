@@ -15,11 +15,12 @@ install_mysql_then_import() {
     else
         echo "Unsupported platform!"
     fi
-    sudo mysql -u root -p < ./sql/blog.sql
+    mysql -uroot < ./scripts/sql/blog.sql
 }
 
 main() {
     install_mysql_then_import
+    echo -n "All done!"
 }
 
 main

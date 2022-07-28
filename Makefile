@@ -9,6 +9,7 @@ build:
 	@$(GO) mod vendor
 	@docker-compose up -d
 	@$(GO) build .
+	@./scripts/setup.sh
 
 test:
 	@$(GO) test -v .

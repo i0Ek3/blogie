@@ -28,7 +28,8 @@ A blog backend program developed with Gin which integrates many useful features.
 
 ```shell
 # Please make sure docker is running
-$ make ; ./blogie -h
+$ make # build blogie
+$ ./blogie -h
 
 Usage of ./blogie:
   -config string
@@ -59,7 +60,7 @@ $ ./scripts/setup.sh
 $ mysql -uroot -p
 mysql> CREATE DATABASE blogie;
 mysql> USE blogie;
-mysql> SOURCE ./doc/sql/blog.sql; # import blog.sql
+mysql> SOURCE ./scripts/sql/blog.sql; # import blog.sql
 ```
 
 After import blog.sql, it will create following four tables:
@@ -338,7 +339,6 @@ In this project, we use signal to implement graceful shutdown and restart. On Un
   
   - use command `curlie -X POST http://127.0.0.1:8080/upload/file -F file=@./demo.jpg -F type=1` to solve it
 
-
 ## Credit
 
-[marmotedu](https://github.com/marmotedu) | [eddycjy](https://github.com/eddycjy) | [minibear2333](https://github.com/golang-minibear2333) | demon
+[marmotedu](https://github.com/marmotedu) | [eddycjy](https://github.com/eddycjy) | [minibear2333](https://github.com/minibear2333) | demon
