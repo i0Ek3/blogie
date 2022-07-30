@@ -66,7 +66,7 @@ Loading Go Runtime support.
 (gdb)
 ```
 
-> ps: macOS user may occurs gdb issue cause of coreutils problem.
+> ps: macOS users may encounter such a prompt: please check gdb is codesigned - see taskgated(8).
 
 ## Architecture
 
@@ -91,7 +91,7 @@ In this part, we'll show you how this project work.
 │   └── service         // project core business logic
 ├── pkg                 // project related module packages
 ├── scripts             // some scripts and sql file
-└── storage             // 
+└── storage             // store logs and other files
 ```
 
 ### Database
