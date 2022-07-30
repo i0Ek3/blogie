@@ -1,25 +1,58 @@
 #!/bin/bash
 
-install_mysql_then_import() {
+update_for_linux() {
+    sudo apt update; sudo apt upgrade
+}
+
+update_for_mac() {
+    brew update; brew upgrade
+}
+
+install_mysql_for_linux() {
+    update_for_linux
+    sudo apt-get install -y mysql-server
+    systemctl start mysql
+    sudo mysql -uroot < ./scripts/sql/blog.sql
+}
+
+install_docker_for_linux() {
+    update_for_linux
+    sudo apt install -y docker docker-compose
+    docker-compose up -d
+}
+
+install_mysql_for_mac() {
+    update_for_mac
+    brew install mysql
+    brew services start mysql
+    mysql -uroot < ./scripts/sql/blog.sql
+}
+
+install_docker_for_mac() {
+    update_for_mac
+    brew install docker docker-compose
+    docker-compose up -d
+}
+
+
+install_mysql_and_docker() {
     platform=$(uname -s)
 
     if [ $platform == "Darwin" ]
     then
-        brew update ; brew upgrade
-        brew install mysql
-        brew services start mysql
+        install_mysql_for_mac
+        install_docker_for_mac
     elif [ $platform == 'Linux' ]
     then
-        sudo apt update ; sudo apt install -y mysql
-        sudo service mysql start
+        install_mysql_for_linux
+        install_docker_for_linux
     else
         echo "Unsupported platform!"
     fi
-    mysql -uroot < ./scripts/sql/blog.sql
 }
 
 main() {
-    install_mysql_then_import
+    install_mysql_and_docker
     echo -n "All done!"
 }
 
