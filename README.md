@@ -75,7 +75,7 @@ In this part, we'll show you how this project work.
 ```shell
 ├── README.md           // project instruction
 ├── Makefile            // used to build program
-├── docker-compose.yml  // used to boot jaeger
+├── docker-compose.yml  // used to boot jaeger and mysql
 ├── go.mod
 ├── go.sum
 ├── main.go             // program entry
@@ -124,6 +124,19 @@ mysql> show tables;
 | blog_tag         |
 +------------------+
 4 rows in set (0.00 sec)
+```
+
+At the end of the project, you can export all files in your own database, and use following command to query the specific path:
+
+```shell
+mysql> show global variables like "%datadir%";
+
++---------------+-----------------------+
+| Variable_name | Value                 |
++---------------+-----------------------+
+| datadir       | /usr/local/var/mysql/ |
++---------------+-----------------------+
+1 row in set (0.00 sec)
 ```
 
 ### RESTful API
