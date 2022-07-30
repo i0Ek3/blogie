@@ -7,10 +7,10 @@ import (
 	"github.com/juju/ratelimit"
 )
 
-type LimiterIface interface {
+type BaseLimiter interface {
 	Key(c *gin.Context) string
 	GetBucket(key string) (*ratelimit.Bucket, bool)
-	AddBuckets(rules ...BucketRule) LimiterIface
+	AddBuckets(rules ...BucketRule) BaseLimiter
 }
 
 // Limiter defines a map which used to map key-value pair to bucket

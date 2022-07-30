@@ -7,7 +7,7 @@ import (
 	"github.com/i0Ek3/blogie/pkg/limiter"
 )
 
-func RateLimiter(l limiter.LimiterIface) gin.HandlerFunc {
+func RateLimiter(l limiter.BaseLimiter) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		key := l.Key(c)
 		if bucket, ok := l.GetBucket(key); ok {

@@ -1,15 +1,26 @@
 package main
 
 import (
+	"context"
+	"encoding/base64"
 	"log"
 
 	"github.com/fsnotify/fsnotify"
 	"github.com/gin-gonic/gin"
+	"github.com/i0Ek3/blogie/global"
 )
 
 func main() {
-	watchdog()
-	runme()
+	_a, _b, _c := false, false, true
+	if _a {
+		runme()
+	}
+	if _b {
+		watchdog()
+	}
+	if _c {
+		decode()
+	}
 }
 
 func runme() {
@@ -23,8 +34,8 @@ func runme() {
 		c.JSON(200, gin.H{"message": "pong"})
 	})
 
-	// uncomment it to run
-	// global.Logger.Infof(context.Background(), "This is a test message to test Info level.")
+	// test log ouput
+	global.Logger.Infof(context.Background(), "This is a test message to test Info level.")
 
 	// r.Run() parses the given address and then invoke http.ListenAndServe() register
 	// an Engine instance into handler, also Engine type implements ServeHTTP(), so Engine
@@ -59,4 +70,14 @@ func watchdog() {
 	path := "/Volumes/2Tmac/github/mine/blogie/configs/config.yaml"
 	_ = watcher.Add(path)
 	<-done
+}
+
+func decode() {
+	// payload fetched from GenerateToken(), which contains appKey and appSecret
+	// after somebody get your payload, your appKey and appSecret will be cracked
+	// by following method, so please do not store plaintext information in the payload
+	payload := "eyJhcHBfa2V5IjoiY2UwMTM2ZWJiZmU5MzgzZWM4ZjM1YTRlNjFiNmM2NjciLCJhcHBfc2VjcmV0IjoiYjVkZGU2M2U3OWQ5MmRhMjUwMmM5YTMxNjBhNWY2NTUiLCJpc3MiOiJibG9naWUifQ"
+	msg, _ := base64.StdEncoding.DecodeString(payload)
+	log.Println(string(msg))
+
 }

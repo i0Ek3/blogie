@@ -47,15 +47,24 @@ func NewDBEngine(dbSetting *setting.DatabaseSettingS) (*gorm.DB, error) {
 	}
 
 	db.SingularTable(true)
+
+	// register callback functions
 	db.Callback().Create().Replace("gorm:update_time_stamp", updateTimeStampForCreateCallback)
 	db.Callback().Update().Replace("gorm:update_time_stamp", updateTimeStampForUpdateCallback)
 	db.Callback().Delete().Replace("gorm:delete", deleteCallback)
+
 	db.DB().SetMaxIdleConns(dbSetting.MaxIdleConns)
 	db.DB().SetMaxOpenConns(dbSetting.MaxOpenConns)
 	otg.AddGormCallbacks(db)
+
 	return db, nil
 }
 
+// In our project, we use callbacks to handle public fields
+
+// updateTimeStampForCreateCallback is a callback function
+// for create, which set the value to the current time by
+// checking if the corresponding field is empty
 func updateTimeStampForCreateCallback(scope *gorm.Scope) {
 	if !scope.HasError() {
 		nowTime := time.Now().Unix()
@@ -72,12 +81,21 @@ func updateTimeStampForCreateCallback(scope *gorm.Scope) {
 	}
 }
 
+// updateTimeStampForUpdateCallback is a callback function
+// for update, which find the corresponding field attribute
+// according to the identification, if it does not exist,
+// set it to the value of ModifiedOn
 func updateTimeStampForUpdateCallback(scope *gorm.Scope) {
 	if _, ok := scope.Get("gorm:update_column"); ok {
 		_ = scope.SetColumn("ModifiedOn", time.Now().Unix())
 	}
 }
 
+// deleteCallback is a callback function for delete, which
+// find the corresponding field attribute according to the
+// identification, and judge whether the relevant attribute
+// exists, if so, execute the update operation for soft deletion,
+// otherwise execute delete for hard deletion
 func deleteCallback(scope *gorm.Scope) {
 	if !scope.HasError() {
 		var extraOption string

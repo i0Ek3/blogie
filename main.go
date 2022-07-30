@@ -4,7 +4,6 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"github.com/i0Ek3/blogie/pkg/version"
 	"log"
 	"net/http"
 	"os"
@@ -12,6 +11,15 @@ import (
 	"strings"
 	"syscall"
 	"time"
+
+	"github.com/i0Ek3/blogie/global"
+	"github.com/i0Ek3/blogie/internal/model"
+	"github.com/i0Ek3/blogie/internal/routers"
+	"github.com/i0Ek3/blogie/pkg/logger"
+	"github.com/i0Ek3/blogie/pkg/setting"
+	"github.com/i0Ek3/blogie/pkg/tracer"
+	"github.com/i0Ek3/blogie/pkg/validator"
+	"github.com/i0Ek3/blogie/pkg/version"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
@@ -21,13 +29,6 @@ import (
 	v10 "github.com/go-playground/validator/v10"
 	en_translations "github.com/go-playground/validator/v10/translations/en"
 	zh_translations "github.com/go-playground/validator/v10/translations/zh"
-	"github.com/i0Ek3/blogie/global"
-	"github.com/i0Ek3/blogie/internal/model"
-	"github.com/i0Ek3/blogie/internal/routers"
-	"github.com/i0Ek3/blogie/pkg/logger"
-	"github.com/i0Ek3/blogie/pkg/setting"
-	"github.com/i0Ek3/blogie/pkg/tracer"
-	"github.com/i0Ek3/blogie/pkg/validator"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
@@ -203,7 +204,7 @@ func setupLogger() error {
 	global.Logger = logger.NewLogger(&lumberjack.Logger{
 		Filename:  global.AppSetting.LogSavePath + "/" + global.AppSetting.LogFileName + global.AppSetting.LogFileExt,
 		MaxSize:   100, // maximum size, megabytes
-		MaxAge:    7,  // retain days
+		MaxAge:    7,   // retain days
 		LocalTime: true,
 	}, "", log.LstdFlags)
 

@@ -12,7 +12,7 @@ A blog backend program developed with Gin which integrates many useful features.
 
 - Integrate middlewares like link tracing, scalable
 
-- Support swagger API 
+- Support swagger API and static resource file service
 
 - Support application configuration
 
@@ -40,11 +40,59 @@ Usage of ./blogie:
         run in which port
 ```
 
+If you want to use gdb to debug your program, you can build binary with following command:
+
+```go
+$ GOFLAGS="-ldflags=-compressdwarf=false" go build
+$ gdb blogie
+
+GNU gdb (GDB) 12.1
+Copyright (C) 2022 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-apple-darwin21.3.0".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<https://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from blogie...
+Loading Go Runtime support.
+(gdb)
+```
+
+> ps: macOS user may occurs gdb issue cause of coreutils problem.
+
 ## Architecture
 
 In this part, we'll show you how this project work.
 
-> TODO
+```shell
+├── README.md           // project instruction
+├── Makefile            // used to build program
+├── docker-compose.yml  // used to boot jaeger
+├── go.mod
+├── go.sum
+├── main.go             // program entry
+├── configs             // global config file
+├── docs                // swagger files and docs
+├── example             // some validation examples
+├── global              // global variables
+├── internal            // internal modules
+│   ├── dao             // DAO, data related operations
+│   ├── middleware      // HTTP middleware
+│   ├── model           // Model, database related operations
+│   ├── routers         // route processing logic
+│   └── service         // project core business logic
+├── pkg                 // project related module packages
+├── scripts             // some scripts and sql file
+└── storage             // 
+```
 
 ### Database
 
@@ -191,12 +239,12 @@ There are two common API access control schemes on the market today, namely OAut
 JWT contains Header, Payload, Signature three parts:
 
 ```Console
-Header {
+Header { # json object
     "alg": "HS256", # HMAC SHA256
     "typ": "JWT"
 }
 
-Payload { # mainly stored in the actual data transmitted in JWT
+Payload { # json object, mainly stored in the actual data transmitted in JWT
     "sub": "Topic",
     "name": "i0Ek3",
     "admin": true
@@ -205,8 +253,8 @@ Payload { # mainly stored in the actual data transmitted in JWT
 Signature # Signature of the agreed algorithm and rules for the first two parts (Header+Payload)
 
 HMACSHA256(
-  base64UrlEncode(header) + "." +
-  base64UrlEncode(payload),
+  base64UrlEncode(Header) + "." +
+  base64UrlEncode(Payload),
   secret)
 ```
 
@@ -219,6 +267,11 @@ $ curlie -X POST \
   -H 'app_secret: blogie'
 
 {"token":"eyJhbG...pXVCJ9.eyJhcH...dpZSJ9.9X4SFy...pxMcs8"}
+         |     Part1     |     Part2     |      Part3    |
+
+Part1 = base64UrlEncode(Header)
+Part1 = base64UrlEncode(Payload)
+Part3 = HMACSHA256(Part1 + "." + Part2, secret)
 ```
 
 ### Middleware

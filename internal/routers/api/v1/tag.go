@@ -52,6 +52,7 @@ func (t Tag) List(c *gin.Context) {
 	}
 
 	tags, err := svc.GetTagList(&param, &pager)
+	debug.DebugHere("tag::", tags)
 	if err != nil {
 		global.Logger.Errorf(c, "svc.GetTagList err: %v", err)
 		response.ToErrorResponse(errcode.ErrorGetTagListFail)
@@ -82,7 +83,7 @@ func (t Tag) Create(c *gin.Context) {
 	}
 
 	svc := service.New(c.Request.Context())
-	err := svc.CreatTag(&param)
+	err := svc.CreateTag(&param)
 	if err != nil {
 		global.Logger.Errorf(c, "svc.CreateTag err: %v", err)
 		response.ToErrorResponse(errcode.ErrorCreateTagFail)

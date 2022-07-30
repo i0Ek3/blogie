@@ -24,7 +24,7 @@ type CreateTagRequest struct {
 type UpdateTagRequest struct {
 	ID         uint32 `form:"id" binding:"required,gte=1"`
 	Name       string `form:"name" binding:"min=3,max=100"`
-	State      *uint8 `form:"state" binding:"required,oneof=0 1"`
+	State      *uint8 `form:"state" binding:"omitempty,oneof=0 1"`
 	ModifiedBy string `form:"modified_by" binding:"required,min=3,max=100"`
 }
 
@@ -40,7 +40,7 @@ func (svc *Service) GetTagList(param *TagListRequest, pager *app.Pager) ([]*mode
 	return svc.dao.GetTagList(param.Name, param.State, pager.Page, pager.PageSize)
 }
 
-func (svc *Service) CreatTag(param *CreateTagRequest) error {
+func (svc *Service) CreateTag(param *CreateTagRequest) error {
 	return svc.dao.CreateTag(param.Name, param.State, param.CreatedBy)
 }
 

@@ -1,33 +1,26 @@
 #!/bin/bash
 
-# add new article
-curl -X 'POST' \
-  'http://127.0.0.1:8080/api/v1/articles?tag_id=Gopher&title=How%20to%20test%20API%20with%20curl&cover_image_url=./images/demo.jpg&content=this%20is%20a%20test&created_by=i0Ek3' \
-  -H 'accept: application/json'
+#
+#   There is some methods to test your APIs:
+#     1. use curl program in terminal to test, also you can use curlie
+#     2. use postman or related API tools to test
+#     3. after run the blogie program, you use swagger to test
+#
 
-# add another article
-curl -X 'POST' \
-  'http://127.0.0.1:8080/api/v1/articles?tag_id=Gopher&title=How%20to%20test%20API%20with%20curl1&cover_image_url=./images/demo.jpg&content=this%20is%20a%20test1&created_by=i0Ek3' \
-  -H 'accept: application/json'
+# create new tag without any message
+curl -X POST http://127.0.0.1:8080/api/v1/tags
 
-# get an article
-curl -X 'GET' \
-  'http://127.0.0.1:8080/api/v1/articles/1' \
-  -H 'accept: application/json'
+# create new article without any message
+curl -X POST http://127.0.0.1:8080/api/v1/articles
+
+# delete a tag
+curl -X DELETE http://127.0.0.1:8080/api/v1/tags/1
+
+# delete a article
+curl -X DELETE http://127.0.0.1:8080/api/v1/articles/1
+
+# get tag list
+curl -X GET http://127.0.0.1:8080/api/v1/tags/1
 
 # get article list
-curl -X 'GET' \
-  'http://127.0.0.1:8080/api/v1/articles?name=Gopher&tag_id=1&state=0' \
-  -H 'accept: application/json'
-
-# update an article
-curl -X 'PUT' \
-  'http://127.0.0.1:8080/api/v1/articles/1' \
-  -H 'accept: application/json' \
-  -H 'Content-Type: application/json' \
-  -d 'i0Ek3'
-
-# delete an article
-curl -X 'DELETE' \
-  'http://127.0.0.1:8080/api/v1/articles/1' \
-  -H 'accept: application/json'
+curl -X GET http://127.0.0.1:8080/api/v1/articles/1

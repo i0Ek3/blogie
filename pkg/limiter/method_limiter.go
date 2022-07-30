@@ -10,10 +10,10 @@ import (
 // MethodLimiter used to rate limit for part of the routing
 type MethodLimiter struct {
 	*Limiter
-	LimiterIface
+	BaseLimiter
 }
 
-func NewMethodLimiter() LimiterIface {
+func NewMethodLimiter() BaseLimiter {
 	return MethodLimiter{
 		Limiter: &Limiter{limiterBuckets: make(map[string]*ratelimit.Bucket)},
 	}
@@ -35,7 +35,7 @@ func (l MethodLimiter) GetBucket(key string) (*ratelimit.Bucket, bool) {
 	return bucket, ok
 }
 
-func (l MethodLimiter) AddBuckets(rules ...BucketRule) LimiterIface {
+func (l MethodLimiter) AddBuckets(rules ...BucketRule) BaseLimiter {
 	for _, rule := range rules {
 		if _, ok := l.limiterBuckets[rule.Key]; !ok {
 			l.limiterBuckets[rule.Key] = ratelimit.NewBucketWithQuantum(rule.FillInterval, rule.Capacity, rule.Quantum)

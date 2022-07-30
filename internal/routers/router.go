@@ -4,17 +4,17 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/gin-gonic/gin"
-	"github.com/i0Ek3/blogie/global"
-	"github.com/i0Ek3/blogie/internal/middleware"
-	"github.com/i0Ek3/blogie/internal/routers/api"
 	v1 "github.com/i0Ek3/blogie/internal/routers/api/v1"
 	"github.com/i0Ek3/blogie/pkg/debug"
-	"github.com/i0Ek3/blogie/pkg/limiter"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
+	"github.com/gin-gonic/gin"
 	_ "github.com/i0Ek3/blogie/docs"
+	"github.com/i0Ek3/blogie/global"
+	"github.com/i0Ek3/blogie/internal/middleware"
+	"github.com/i0Ek3/blogie/internal/routers/api"
+	"github.com/i0Ek3/blogie/pkg/limiter"
 )
 
 var methodLimiters = limiter.NewMethodLimiter().AddBuckets(limiter.BucketRule{
@@ -50,42 +50,45 @@ func NewRouter() *gin.Engine {
 	// upload file and access file on static address
 	upload := api.NewUpload()
 	r.POST("/upload/file", upload.UploadFile)
-	// NOTES: StaticFS() -> createStaticHandler() -> fileServer.ServerHTTP()
+	// setting up file services to provide access to static resources
 	r.StaticFS("/static", http.Dir(global.AppSetting.UploadSavePath))
 
 	r.POST("/auth", api.GetAuth)
 
-	// group router
+	tag := v1.NewTag()
+	article := v1.NewArticle()
 	apiv1 := r.Group("api/v1")
 	apiv1.Use(middleware.JWT())
 	{
-		tag := v1.NewTag()
 		tags := apiv1.Group("/tags")
 		{
-			debug.DebugHere("tag", "tag.Create")
+			debug.DebugHere("tag", "POST::Create")
 			tags.POST("", tag.Create)
-			debug.DebugHere("tag", "tag.Delete")
+			debug.DebugHere("tag", "DELETE::Delete")
 			tags.DELETE(":id", tag.Delete)
-			debug.DebugHere("tag", "tag.Update")
+			debug.DebugHere("tag", "PUT::Update")
 			tags.PUT(":id", tag.Update)
-			debug.DebugHere("tag", "tag.Update")
+			debug.DebugHere("tag", "PATCH::Update")
 			tags.PATCH(":id/state", tag.Update)
-			debug.DebugHere("tag", "tag.List")
+			debug.DebugHere("tag", "GET::List")
 			tags.GET("", tag.List)
 		}
 
-		article := v1.NewArticle()
 		articles := apiv1.Group("/articles")
 		{
-			debug.DebugHere("article", article)
+			debug.DebugHere("article", "POST::Create")
 			articles.POST("", article.Create)
+			debug.DebugHere("article", "DELETE::Delete")
 			articles.DELETE(":id", article.Delete)
+			debug.DebugHere("article", "PUT::Update")
 			articles.PUT(":id", article.Update)
+			debug.DebugHere("article", "PATCH::Update")
 			articles.PATCH(":id/state", article.Update)
+			debug.DebugHere("article", "GET::Get")
 			articles.GET(":id", article.Get)
+			debug.DebugHere("article", "GET::List")
 			articles.GET("", article.List)
 		}
 	}
-
 	return r
 }
