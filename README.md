@@ -196,7 +196,7 @@ In our project, we support seven log levels: Trace, Debug, Info, Warn, Error, Fa
 
 Also our logger support output the log into file and os.Stdout.
 
-Add you should know something here, we add lumberjack into our project, so our project support log rotation, if you don't like that, you can only use Logrotate program. In the other hand, add lumberjack will increases the complexity of the log package.
+And you should know something here, we add lumberjack into our project, so our project support log rotation, if you don't like that, you can only use Logrotate program. In the other hand, add lumberjack will increases the complexity of the log package.
 
 ### Common Component
 
@@ -214,7 +214,7 @@ To ensure the standardization of the application, we will abstract the basic fun
 
 ### Interface Generation
 
-We use swagger to generate our interface, just write comment for API and then swagger can read it and generate correspoding interface documents.
+We use swagger to generate our interface documents, just write comment for APIs and then swagger can read it and generate correspoding interface documents.
 
 | Comment  | Details                                                                                              |
 | -------- | ---------------------------------------------------------------------------------------------------- |
@@ -361,7 +361,7 @@ $ CGO_ENABLED=0 GOOS=windows go build -a -o blogie.exe .
 $ CGO_ENABLED=0 GOOS=darwin go build -a -o blogie .
 ```
 
-If you want to shrink the size of binary of your program, you can remove debug and flags informations by run following command `go build -ldflags="-w -s"`. But, this stuff will cause callstack have no detailed informations while your program appears panic, also cannot use gdb debug the program.
+If you want to shrink the size of binary of your program, you can remove debug and flags information by run following command `go build -ldflags="-w -s"`. But, this stuff will cause callstack have no detailed information while your program appears panic, also cannot use gdb debug the program.
 
 In our project, we choose `ldflags` to set compile informations for our program, you can run following command to set it:
 
@@ -407,4 +407,4 @@ In this project, we use signal to implement graceful shutdown and restart. On Un
 
 ## Credit
 
-[marmotedu](https://github.com/marmotedu) | [eddycjy](https://github.com/eddycjy) | [minibear2333](https://github.com/minibear2333) | demon
+[marmotedu](https://github.com/marmotedu) | [eddycjy](https://github.com/eddycjy) | [minibear2333](https://github.com/minibear2333) | demon | [Go Web Examples](https://gowebexamples.com)

@@ -8,6 +8,8 @@ import (
 	"github.com/fsnotify/fsnotify"
 	"github.com/gin-gonic/gin"
 	"github.com/i0Ek3/blogie/global"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func main() {
