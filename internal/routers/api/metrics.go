@@ -12,19 +12,34 @@ func Expvar(c *gin.Context) {
 	first := true
 	report := func(key string, value any) {
 		if !first {
-			fmt.Fprintf(c.Writer, ",\n")
+			_, err := fmt.Fprintf(c.Writer, ",\n")
+			if err != nil {
+				return
+			}
 		}
 		first = false
 		if str, ok := value.(string); ok {
-			fmt.Fprintf(c.Writer, "%q: %q", key, str)
+			_, err := fmt.Fprintf(c.Writer, "%q: %q", key, str)
+			if err != nil {
+				return
+			}
 		} else {
-			fmt.Fprintf(c.Writer, "%q: %v", key, value)
+			_, err := fmt.Fprintf(c.Writer, "%q: %v", key, value)
+			if err != nil {
+				return
+			}
 		}
 	}
 
-	fmt.Fprintf(c.Writer, "{\n")
+	_, err := fmt.Fprintf(c.Writer, "{\n")
+	if err != nil {
+		return
+	}
 	expvar.Do(func(kv expvar.KeyValue) {
 		report(kv.Key, kv.Value)
 	})
-	fmt.Fprintf(c.Writer, "\n}\n")
+	_, err = fmt.Fprintf(c.Writer, "\n}\n")
+	if err != nil {
+		return
+	}
 }

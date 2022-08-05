@@ -18,7 +18,7 @@ type Article struct {
 }
 
 func (d *Dao) CreateArticle(param *Article) (*model.Article, error) {
-	// construct the needed fields
+	// Construct the required fields
 	article := model.Article{
 		Title:         param.Title,
 		Desc:          param.Desc,
@@ -27,14 +27,12 @@ func (d *Dao) CreateArticle(param *Article) (*model.Article, error) {
 		State:         param.State,
 		Model:         &model.Model{CreatedBy: param.CreatedBy},
 	}
-	// create article in DB
+
 	return article.Create(d.engine)
 }
 
 func (d *Dao) UpdateArticle(param *Article) error {
-	// fetch the article id first
 	article := model.Article{Model: &model.Model{ID: param.ID}}
-	// construct fields
 	values := map[string]any{
 		"modified_by": param.ModifiedBy,
 		"state":       param.State,
@@ -51,7 +49,7 @@ func (d *Dao) UpdateArticle(param *Article) error {
 	if param.Content != "" {
 		values["content"] = param.Content
 	}
-	// update article in DB
+
 	return article.Update(d.engine, values)
 }
 

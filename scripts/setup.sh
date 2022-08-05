@@ -1,5 +1,10 @@
 #!/bin/bash
 
+setup_goenv() {
+  	export GO111MODULE=on; export GOPROXY=https://goproxy.cn
+  	go mod tidy; go mod vendor
+}
+
 update_for_linux() {
     sudo apt update; sudo apt upgrade
 }
@@ -51,6 +56,7 @@ install_mysql_and_docker() {
 }
 
 main() {
+    setup_goenv
     install_mysql_and_docker
     echo -n "All done!"
 }

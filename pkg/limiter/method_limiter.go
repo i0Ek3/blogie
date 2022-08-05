@@ -7,7 +7,7 @@ import (
 	"github.com/juju/ratelimit"
 )
 
-// MethodLimiter used to rate limit for part of the routing
+// MethodLimiter defines a rate limiter to limit part of the routing
 type MethodLimiter struct {
 	*Limiter
 	BaseLimiter

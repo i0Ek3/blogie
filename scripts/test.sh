@@ -46,8 +46,8 @@ wrk_test() {
 }
 
 main() {
-    #test_api
-    #ab_test
+    test_api
+    ab_test
     wrk_test
 }
 

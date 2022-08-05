@@ -17,7 +17,7 @@ const (
 	StateClose = 0
 )
 
-// Model same with database table
+// Model defines common fields of database table
 type Model struct {
 	ID         uint32 `gorm:"primary_key" json:"id"`
 	CreatedBy  string `json:"created_by"`
@@ -48,7 +48,7 @@ func NewDBEngine(dbSetting *setting.DatabaseSettingS) (*gorm.DB, error) {
 
 	db.SingularTable(true)
 
-	// register callback functions
+	// Register callback functions
 	db.Callback().Create().Replace("gorm:update_time_stamp", updateTimeStampForCreateCallback)
 	db.Callback().Update().Replace("gorm:update_time_stamp", updateTimeStampForUpdateCallback)
 	db.Callback().Delete().Replace("gorm:delete", deleteCallback)

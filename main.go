@@ -214,7 +214,7 @@ func setupLogger() error {
 func setupTracer() error {
 	jaegerTracer, _, err := tracer.NewJaegerTracer(
 		version.AppName,
-		"127.0.0.1:6831",
+		version.Address,
 	)
 	if err != nil {
 		return err
@@ -227,7 +227,7 @@ func setupValidator() error {
 	global.Validator = validator.NewCustomValidator()
 	global.Validator.Engine()
 	binding.Validator = global.Validator
-	uni := ut.New(en.New(), en.New(), zh.New())
+	uni := ut.New(en.New(), zh.New())
 	v, ok := binding.Validator.Engine().(*v10.Validate)
 	if ok {
 		zhTran, _ := uni.GetTranslator("zh")

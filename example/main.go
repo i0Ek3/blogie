@@ -36,7 +36,7 @@ func runme() {
 		c.JSON(200, gin.H{"message": "pong"})
 	})
 
-	// test log ouput
+	// Test log output
 	global.Logger.Infof(context.Background(), "This is a test message to test Info level.")
 
 	// r.Run() parses the given address and then invoke http.ListenAndServe() register
@@ -75,8 +75,8 @@ func watchdog() {
 }
 
 func decode() {
-	// payload fetched from GenerateToken(), which contains appKey and appSecret
-	// after somebody get your payload, your appKey and appSecret will be cracked
+	// Payload fetched from GenerateToken(), which contains appKey and appSecret
+	// after somebody gets your payload, your appKey and appSecret will be cracked
 	// by following method, so please do not store plaintext information in the payload
 	payload := "eyJhcHBfa2V5IjoiY2UwMTM2ZWJiZmU5MzgzZWM4ZjM1YTRlNjFiNmM2NjciLCJhcHBfc2VjcmV0IjoiYjVkZGU2M2U3OWQ5MmRhMjUwMmM5YTMxNjBhNWY2NTUiLCJpc3MiOiJibG9naWUifQ"
 	msg, _ := base64.StdEncoding.DecodeString(payload)

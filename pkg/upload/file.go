@@ -83,13 +83,23 @@ func SaveFile(file *multipart.FileHeader, dst string) error {
 	if err != nil {
 		return err
 	}
-	defer src.Close()
+	defer func(src multipart.File) {
+		err := src.Close()
+		if err != nil {
+			return
+		}
+	}(src)
 
 	out, err := os.Create(dst)
 	if err != nil {
 		return err
 	}
-	defer out.Close()
+	defer func(out *os.File) {
+		err := out.Close()
+		if err != nil {
+			return
+		}
+	}(out)
 
 	_, err = io.Copy(out, src)
 	return err

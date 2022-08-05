@@ -17,7 +17,7 @@ func NewJaegerTracer(serviceName, agentHostPort string) (opentracing.Tracer, io.
 		},
 		Reporter: &config.ReporterConfig{
 			LogSpans:            true,
-			BufferFlushInterval: 1 * time.Second,
+			BufferFlushInterval: time.Second,
 			LocalAgentHostPort:  agentHostPort,
 		},
 	}

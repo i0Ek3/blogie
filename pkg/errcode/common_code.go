@@ -1,4 +1,4 @@
-// package errcode redesigns error code
+// Package errcode redesigned error code
 package errcode
 
 //

@@ -12,20 +12,20 @@ type ServerSettingS struct {
 }
 
 type AppSettingS struct {
-	// log related
+	// Log related
 	DefaultPageSize int
 	MaxPageSize     int
 	LogSavePath     string
 	LogFileName     string
 	LogFileExt      string
 
-	// upload service related
+	// Upload service related
 	UploadSavePath       string
 	UploadServerUrl      string
 	UploadImageMaxSize   int
 	UploadImageAllowExts []string
 
-	// timeout control related
+	// Timeout control related
 	ContextTimeout time.Duration
 }
 

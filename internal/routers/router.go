@@ -47,10 +47,10 @@ func NewRouter() *gin.Engine {
 		c.Redirect(http.StatusMovedPermanently, "/swagger/index.html")
 	})
 
-	// upload file and access file on static address
+	// Upload file and access file on static address
 	upload := api.NewUpload()
 	r.POST("/upload/file", upload.UploadFile)
-	// setting up file services to provide access to static resources
+	// Setting up file services to provide access to static resources
 	r.StaticFS("/static", http.Dir(global.AppSetting.UploadSavePath))
 
 	r.POST("/auth", api.GetAuth)

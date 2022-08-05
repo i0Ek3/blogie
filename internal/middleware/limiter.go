@@ -13,7 +13,7 @@ func RateLimiter(l limiter.BaseLimiter) gin.HandlerFunc {
 		if bucket, ok := l.GetBucket(key); ok {
 			// TakeAvailable returns the available buckets
 			count := bucket.TakeAvailable(1)
-			// if available buckets' count equals 0, which means there are too many requests
+			// If available buckets' count equals 0, which means there are too many requests
 			if count == 0 {
 				response := app.NewResponse(c)
 				response.ToErrorResponse(errcode.TooManyRequests)

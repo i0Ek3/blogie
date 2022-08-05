@@ -58,6 +58,8 @@ func (e *Error) StatusCode() int {
 		return http.StatusInternalServerError
 	case InvalidParams.Code(): // 400
 		return http.StatusBadRequest
+	case NotFound.Code():
+		return http.StatusNotFound
 	case DatabaseError.Code():
 		return http.StatusInternalServerError
 	case UnauthorizedAuthNotExist.Code():
