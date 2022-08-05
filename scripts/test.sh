@@ -36,9 +36,19 @@ ab_test() {
     ab -c 1000 -n 1000 http://localhost:8080/api/v1/articles
 }
 
+wrk_test() {
+    wrk -c 10 -d 10s -t10 http://localhost:8080/swagger
+    wrk -c 10 -d 10s -t10 http://localhost:8080/upload/file
+    wrk -c 10 -d 10s -t10 http://localhost:8080/auth
+    wrk -c 10 -d 10s -t10 http://localhost:8080/debug/vars
+    wrk -c 10 -d 10s -t10 http://localhost:8080/api/v1/tags
+    wrk -c 10 -d 10s -t10 http://localhost:8080/api/v1/articles
+}
+
 main() {
     #test_api
-    ab_test
+    #ab_test
+    wrk_test
 }
 
 main

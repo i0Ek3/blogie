@@ -34,7 +34,6 @@ install_docker_for_mac() {
     docker-compose up -d
 }
 
-
 install_mysql_and_docker() {
     platform=$(uname -s)
 
