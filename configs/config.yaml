@@ -4,6 +4,7 @@ Server:
   HttpPort: 8080
   ReadTimeout: 60
   WriteTimeout: 60
+  HeaderBytes: 1048576
 
 # Application config
 App:
@@ -51,5 +52,5 @@ Email:
 
 # Global Enable config
 Enable:
-  Enable: false
-  Debug: true
+  Enable: False
+  Debug: True

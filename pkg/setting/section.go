@@ -9,6 +9,7 @@ type ServerSettingS struct {
 	HttpPort     string
 	ReadTimeout  time.Duration
 	WriteTimeout time.Duration
+	HeaderBytes  int
 }
 
 type AppSettingS struct {

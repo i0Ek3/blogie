@@ -75,19 +75,19 @@ func init() {
 // @description A blog backend program developed with Gin.
 // @termOfService https://github.com/i0Ek3/blogie
 func main() {
-	// set run mode for Gin
+	// Set run mode for Gin
 	gin.SetMode(global.ServerSetting.RunMode)
 
-	// create an Engine instance which is a handler
+	// Create an Engine instance which is a handler
 	router := routers.NewRouter()
 
-	// create a http server by our own rules
+	// Create a http server by our own rules
 	ser := &http.Server{
 		Addr:           ":" + global.ServerSetting.HttpPort,
 		Handler:        router,
 		ReadTimeout:    global.ServerSetting.ReadTimeout,
 		WriteTimeout:   global.ServerSetting.WriteTimeout,
-		MaxHeaderBytes: 1 << 20,
+		MaxHeaderBytes: global.ServerSetting.HeaderBytes,
 	}
 
 	go func() {
@@ -98,7 +98,7 @@ func main() {
 	}()
 
 	quit := make(chan os.Signal, 2)
-	// 2 SIGINT, 15 SIGTERM
+	// NOTES: 2 SIGINT, 15 SIGTERM
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
 	log.Println("Shutting down server...")
