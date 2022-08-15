@@ -70,6 +70,8 @@ func NewRouter() *gin.Engine {
 			tags.PUT(":id", tag.Update)
 			debug.DebugHere("tag", "PATCH::Update")
 			tags.PATCH(":id/state", tag.Update)
+			debug.DebugHere("tag", "GET::Get")
+			tags.GET(":id", tag.Get)
 			debug.DebugHere("tag", "GET::List")
 			tags.GET("", tag.List)
 		}

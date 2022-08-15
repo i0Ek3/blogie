@@ -16,9 +16,33 @@ func NewTag() Tag {
 	return Tag{}
 }
 
+// @Summary Get A Tag
+// @Produce json
+// @Param id path int true "tag id"
+// @Success 200 {object} model.TagSwagger "success"
+// @Failure 400 {object} errcode.Error "request error"
+// @Failure 500 {object} errcode.Error "internal server error"
+// @Router /api/v1/tags/{id} [get]
 func (t Tag) Get(c *gin.Context) {
 	debug.DebugHere("tag::", "Get")
-	app.NewResponse(c).ToErrorResponse(errcode.InternalServerError)
+	param := service.TagRequest{}
+	response := app.NewResponse(c)
+	valid, errs := app.BindAndValid(c, &param)
+	if !valid {
+		global.Logger.Errorf(c, "app.BindAndValid errs: %v", errs)
+		response.ToErrorResponse(errcode.InvalidParams.WithDetails(errs.Errors()...))
+		return
+	}
+
+	svc := service.New(c.Request.Context())
+	tag, err := svc.GetTag(&param)
+	if err != nil {
+		global.Logger.Errorf(c, "svc.GetTag err: %v", err)
+		response.ToErrorResponse(errcode.ErrorGetTagFail)
+		return
+	}
+
+	response.ToResponse(tag)
 }
 
 // @Summary Get Tag List

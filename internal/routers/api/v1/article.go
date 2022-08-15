@@ -19,7 +19,7 @@ func NewArticle() Article {
 // @Summary Get An Article
 // @Produce json
 // @Param id path int true "article id"
-// @Success 200 {object} model.Article "success"
+// @Success 200 {object} model.ArticleSwagger "success"
 // @Failure 400 {object} errcode.Error "request error"
 // @Failure 500 {object} errcode.Error "internal server error"
 // @Router /api/v1/articles/{id} [get]
@@ -88,7 +88,7 @@ func (a Article) List(c *gin.Context) {
 // @Param content body string true "article content"
 // @Param created_by body string true "creator"
 // @Param state body int false "state"
-// @Success 200 {object} model.Article "success"
+// @Success 200 {object} model.ArticleSwagger "success"
 // @Failure 400 {object} errcode.Error "request error"
 // @Failure 500 {object} errcode.Error "internal server error"
 // @Router /api/v1/articles [post]
@@ -122,7 +122,7 @@ func (a Article) Create(c *gin.Context) {
 // @Param cover_image_url body string true "cover image url"
 // @Param content body string true "article content"
 // @Param modified_by body string true "updator"
-// @Success 200 {object} model.Article "success"
+// @Success 200 {object} model.ArticleSwagger "success"
 // @Failure 400 {object} errcode.Error "request error"
 // @Failure 500 {object} errcode.Error "internal server error"
 // @Router /api/v1/articles/{id} [put]

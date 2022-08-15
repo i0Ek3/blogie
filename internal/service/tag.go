@@ -10,6 +10,11 @@ type CountTagRequest struct {
 	State uint8  `form:"state,default=1" binding:"oneof=0 1"`
 }
 
+type TagRequest struct {
+	Id  uint32 `form:"id" binding:"required,gte=1"`
+	State uint8  `form:"state,default=1" binding:"oneof=0 1"`
+}
+
 type TagListRequest struct {
 	Name  string `form:"name" binding:"max=100"`
 	State uint8  `form:"state,default=1" binding:"oneof=0 1"`
@@ -34,6 +39,10 @@ type DeleteTagRequest struct {
 
 func (svc *Service) CountTag(param *CountTagRequest) (int, error) {
 	return svc.dao.CountTag(param.Name, param.State)
+}
+
+func (svc *Service) GetTag(param *TagRequest) (model.Tag, error) {
+	return svc.dao.GetTag(param.Id, param.State)
 }
 
 func (svc *Service) GetTagList(param *TagListRequest, pager *app.Pager) ([]*model.Tag, error) {
