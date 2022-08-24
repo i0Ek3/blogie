@@ -8,7 +8,7 @@ import (
 	"github.com/i0Ek3/blogie/pkg/setting"
 	"github.com/jinzhu/gorm"
 
-	otg "github.com/eddycjy/opentracing-gorm"
+	otg "github.com/smacker/opentracing-gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 

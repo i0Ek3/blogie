@@ -98,7 +98,10 @@ func main() {
 	}()
 
 	quit := make(chan os.Signal, 2)
-	// NOTES: 2 SIGINT, 15 SIGTERM
+	// NOTES: SIGINT(2) denotes signal sent by Ctrl+C,
+	// SIGTERM(15) denotes signal can be blocked, SIGQUIT(3)
+	// denotes signal sent by Ctrl+\, SIGKILL(9) denotes signal
+	// non-catchable.
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
 	log.Println("Shutting down server...")
