@@ -8,13 +8,17 @@ A blog backend program developed with Gin which integrates many useful features.
 
 - Fully detailed notes and standard coding
 
-- Interface validation and API access control
+- Support RESTful APIs and APIs documentary generation
 
-- Integrate middlewares like link tracing, scalable
+- Interface validation and APIs access control
 
-- Support swagger API and static resource file service
+- Integrate middlewares, scalable
+
+- Support static resource file service
 
 - Support application configuration
+
+- Support link tracing with OpenTelemetry specification
 
 - Graceful shutdown and restart
 
@@ -71,6 +75,8 @@ Loading Go Runtime support.
 ## Architecture
 
 In this part, we'll show you how this project work.
+
+![](https://github.com/i0Ek3/blogie/blob/main/images/blogie.jpg)
 
 ```shell
 ├── README.md           // project instruction
@@ -291,7 +297,7 @@ Part3 = HMACSHA256(Part1 + "." + Part2, secret)
 
 #### Access Log
 
-Access log basically records the request method of each request, the start time of the method call, the end time of the method call, the method response result, and the status code of the method response result. and other additional attributes to achieve the effect of log link tracking.
+Access log basically records the request method of each request, the start time of the method call, the end time of the method call, the method response result, and the status code of the method response result. and other additional attributes to achieve the effect of log link tracing.
 
 #### Recovery
 
@@ -309,9 +315,9 @@ During the operation of the application, new clients will be accessed constantly
 
 The mutual influence of upstream and downstream applications leads to a serial response, and eventually makes a certain scale unavailable in the entire cluster application. Therefore, we need to perform the most basic timeout control in all requests in the application.
 
-### Link Tracking
+### Link Tracing
 
-In this part, we use Jaeger to implement link tracking which support OpenTracing specfication. 
+In this part, we use Jaeger to implement link tracing which support OpenTracing specfication. 
 
 Usually, when multiple distributed interfaces call each other and the response is particularly slow, we need to locate and solve the problem in time. Therefore, we need to do link tracing.
 
@@ -386,14 +392,14 @@ In this project, we use signal to implement graceful shutdown and restart. On Un
 ### Mod Issues
 
 - Database driver installation
-  
-  - import `_ "github.com/go-sql-driver/mysql"`
-  
-  - import `_ "github.com/jinzhu/gorm/dialects/mysql"` for model/model.go
+
+  - Add following line `_ "github.com/go-sql-driver/mysql"` for example/main.go
+
+  - Add following line `_ "github.com/jinzhu/gorm/dialects/mysql"` for model/model.go
 
 - Swagger files
-  
-  - import `swaggerFiles "github.com/swaggo/files"` for internal/routers/router.go
+
+  - Add following line `swaggerFiles "github.com/swaggo/files"` for internal/routers/router.go
 
 ### Tag Issues
 
@@ -402,8 +408,8 @@ In this project, we use signal to implement graceful shutdown and restart. On Un
 ### Module Issues
 
 - Upload service: curl: (26) Failed to open/read local data from file/application
-  
-  - use command `curlie -X POST http://127.0.0.1:8080/upload/file -F file=@./demo.jpg -F type=1` to solve it
+
+  - Use command `curlie -X POST http://127.0.0.1:8080/upload/file -F file=@./demo.jpg -F type=1` to solve it
 
 ## Credit
 
