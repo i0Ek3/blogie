@@ -19,6 +19,7 @@ func NewError(code int, msg string) *Error {
 		panic(any(message))
 	}
 	codes[code] = msg
+
 	return &Error{code: code, msg: msg}
 }
 
@@ -46,6 +47,7 @@ func (e *Error) WithDetails(details ...string) *Error {
 	newError := *e
 	newError.details = []string{}
 	newError.details = append(newError.details, details...)
+
 	return &newError
 }
 
@@ -73,5 +75,6 @@ func (e *Error) StatusCode() int {
 	case TooManyRequests.Code(): // 429
 		return http.StatusTooManyRequests
 	}
+
 	return http.StatusInternalServerError
 }

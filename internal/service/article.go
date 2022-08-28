@@ -66,6 +66,7 @@ func (svc *Service) GetArticle(param *ArticleRequest) (*Article, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	return &Article{
 		ID:            article.ID,
 		Title:         article.Title,
@@ -99,6 +100,7 @@ func (svc *Service) GetArticleList(param *ArticleListRequest, pager *app.Pager) 
 			Tag:           &model.Tag{Model: &model.Model{ID: article.TagID}, Name: article.TagName},
 		})
 	}
+
 	return articleList, articleCount, nil
 }
 
@@ -118,6 +120,7 @@ func (svc *Service) CreateArticle(param *CreateArticleRequest) error {
 	if err != nil {
 		return err
 	}
+
 	return nil
 }
 
@@ -153,5 +156,6 @@ func (svc *Service) DeleteArticle(param *DeleteArticleRequest) error {
 	if err != nil {
 		return err
 	}
+
 	return nil
 }

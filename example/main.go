@@ -81,5 +81,4 @@ func decode() {
 	payload := "eyJhcHBfa2V5IjoiY2UwMTM2ZWJiZmU5MzgzZWM4ZjM1YTRlNjFiNmM2NjciLCJhcHBfc2VjcmV0IjoiYjVkZGU2M2U3OWQ5MmRhMjUwMmM5YTMxNjBhNWY2NTUiLCJpc3MiOiJibG9naWUifQ"
 	msg, _ := base64.StdEncoding.DecodeString(payload)
 	log.Println(string(msg))
-
 }

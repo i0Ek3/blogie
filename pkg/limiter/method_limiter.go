@@ -32,6 +32,7 @@ func (l MethodLimiter) Key(c *gin.Context) string {
 
 func (l MethodLimiter) GetBucket(key string) (*ratelimit.Bucket, bool) {
 	bucket, ok := l.limiterBuckets[key]
+
 	return bucket, ok
 }
 

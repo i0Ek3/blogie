@@ -20,6 +20,7 @@ func Recovery() gin.HandlerFunc {
 		Password: global.EmailSetting.Password,
 		From:     global.EmailSetting.From,
 	})
+
 	return func(c *gin.Context) {
 		defer func() {
 			if err := recover(); err != any(nil) {

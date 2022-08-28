@@ -12,5 +12,4 @@ func DebugHere(msg ...any) {
 		s := fmt.Sprintf("---> %s", msg)
 		fmt.Println(color.Cyan(s))
 	}
-	return
 }

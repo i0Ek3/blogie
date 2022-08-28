@@ -23,6 +23,7 @@ func (l *Logger) JSONFormat(level Level, msg string) map[string]any {
 			}
 		}
 	}
+
 	return data
 }
 

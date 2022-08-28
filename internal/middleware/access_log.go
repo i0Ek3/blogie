@@ -19,6 +19,7 @@ func (w AccessLogWriter) Write(p []byte) (int, error) {
 	if n, err := w.body.Write(p); err != nil {
 		return n, err
 	}
+
 	return w.ResponseWriter.Write(p)
 }
 

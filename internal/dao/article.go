@@ -56,20 +56,24 @@ func (d *Dao) UpdateArticle(param *Article) error {
 // GetArticle gets the article according its id and state
 func (d *Dao) GetArticle(id uint32, state uint8) (model.Article, error) {
 	article := model.Article{Model: &model.Model{ID: id}, State: state}
+
 	return article.Get(d.engine)
 }
 
 func (d *Dao) DeleteArticle(id uint32) error {
 	article := model.Article{Model: &model.Model{ID: id}}
+
 	return article.Delete(d.engine)
 }
 
 func (d *Dao) CountArticleListByTagID(id uint32, state uint8) (int, error) {
 	article := model.Article{State: state}
+
 	return article.CountByTagID(d.engine, id)
 }
 
 func (d *Dao) GetArticleListByTagID(id uint32, state uint8, page, pageSize int) ([]*model.ArticleRow, error) {
 	article := model.Article{State: state}
+
 	return article.ListByTagID(d.engine, id, app.GetPageOffset(page, pageSize), pageSize)
 }

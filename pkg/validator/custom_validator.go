@@ -29,6 +29,7 @@ func (v *CustomValidator) ValidateStruct(obj any) error {
 
 func (v *CustomValidator) Engine() any {
 	v.lazyInit()
+
 	return v.Validate
 }
 
@@ -46,5 +47,6 @@ func kindOfData(data any) reflect.Kind {
 	if valueType == reflect.Ptr {
 		valueType = value.Elem().Kind()
 	}
+
 	return valueType
 }

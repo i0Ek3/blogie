@@ -134,6 +134,7 @@ func setupFlag() error {
 	flag.BoolVar(&isVersion, "version", false, "compile information")
 
 	flag.Parse()
+
 	return nil
 }
 
@@ -200,6 +201,7 @@ func setupDBEngine() error {
 	if err != nil {
 		return err
 	}
+
 	return nil
 }
 
@@ -223,6 +225,7 @@ func setupTracer() error {
 		return err
 	}
 	global.Tracer = jaegerTracer
+
 	return nil
 }
 
@@ -245,5 +248,6 @@ func setupValidator() error {
 		}
 	}
 	global.Ut = uni
+
 	return nil
 }

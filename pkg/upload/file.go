@@ -36,6 +36,7 @@ func GetSavePath() string {
 
 func CheckSavePath(dst string) bool {
 	_, err := os.Stat(dst)
+
 	return os.IsNotExist(err)
 }
 
@@ -50,6 +51,7 @@ func CheckContainExt(t FileType, name string) bool {
 			}
 		}
 	}
+
 	return false
 }
 
@@ -62,11 +64,13 @@ func CheckMaxSize(t FileType, f multipart.File) bool {
 			return true
 		}
 	}
+
 	return false
 }
 
 func CheckPermission(dst string) bool {
 	_, err := os.Stat(dst)
+
 	return os.IsPermission(err)
 }
 
@@ -75,6 +79,7 @@ func CreateSavePath(dst string, perm os.FileMode) error {
 	if err != nil {
 		return err
 	}
+
 	return nil
 }
 
@@ -102,5 +107,6 @@ func SaveFile(file *multipart.FileHeader, dst string) error {
 	}(out)
 
 	_, err = io.Copy(out, src)
+
 	return err
 }

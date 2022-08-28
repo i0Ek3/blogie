@@ -92,5 +92,6 @@ func NewRouter() *gin.Engine {
 			articles.GET("", article.List)
 		}
 	}
+
 	return r
 }

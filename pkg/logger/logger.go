@@ -66,6 +66,7 @@ func (l Level) String() string {
 // NewLogger returns a logger instance with prefix and flag
 func NewLogger(w io.Writer, prefix string, flag int) *Logger {
 	l := log.New(w, prefix, flag)
+
 	return &Logger{logger: l}
 }
 
@@ -73,6 +74,7 @@ func NewLogger(w io.Writer, prefix string, flag int) *Logger {
 // affecting the use of other processes
 func (l *Logger) clone() *Logger {
 	logger := *l
+
 	return &logger
 }
 
@@ -85,6 +87,7 @@ func (l *Logger) WithFields(f Fields) *Logger {
 	for k, v := range f {
 		logger.fields[k] = v
 	}
+
 	return logger
 }
 
@@ -92,6 +95,7 @@ func (l *Logger) WithFields(f Fields) *Logger {
 func (l *Logger) WithContext(ctx context.Context) *Logger {
 	logger := l.clone()
 	logger.ctx = ctx
+
 	return logger
 }
 
@@ -103,6 +107,7 @@ func (l *Logger) WithCaller(depth int) *Logger {
 		f := runtime.FuncForPC(pc)
 		logger.callers = []string{fmt.Sprintf("%s: %d %s", file, line, f.Name())}
 	}
+
 	return logger
 }
 
@@ -125,6 +130,7 @@ func (l *Logger) WithCallersFrames() *Logger {
 
 	logger := l.clone()
 	logger.callers = callers
+
 	return logger
 }
 
@@ -137,5 +143,6 @@ func (l *Logger) WithTrace() *Logger {
 			"span_id":  ginCtx.MustGet("X-Span-ID"),
 		})
 	}
+
 	return l
 }

@@ -34,6 +34,7 @@ func GenerateToken(appKey, appSecret string) (string, error) {
 	// NOTES: NewWithClaims support these three algorithms: HS256/HS384/HS512
 	tokenClaims := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	token, err := tokenClaims.SignedString(GetJWTSecret())
+
 	return token, err
 }
 
@@ -50,5 +51,6 @@ func ParseToken(token string) (*Claims, error) {
 			return claims, nil
 		}
 	}
+
 	return nil, err
 }

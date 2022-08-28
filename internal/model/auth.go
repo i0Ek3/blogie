@@ -19,5 +19,6 @@ func (a Auth) Get(db *gorm.DB) (Auth, error) {
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return auth, err
 	}
+
 	return auth, nil
 }

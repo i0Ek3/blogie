@@ -74,6 +74,7 @@ func (s *Setting) ReadSection(k string, v any) error {
 	if _, ok := sections[k]; !ok {
 		sections[k] = v
 	}
+
 	return nil
 }
 
@@ -85,5 +86,6 @@ func (s *Setting) ReloadAllSection() error {
 			return err
 		}
 	}
+
 	return nil
 }

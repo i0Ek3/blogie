@@ -32,5 +32,6 @@ func (e *Email) SendMailTo(to []string, subject, body string) error {
 
 	dialer := gomail.NewDialer(e.Host, e.Port, e.UserName, e.Password)
 	dialer.TLSConfig = &tls.Config{InsecureSkipVerify: e.IsSSL}
+
 	return dialer.DialAndSend(m)
 }

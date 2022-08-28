@@ -91,6 +91,7 @@ func (a Article) ListByTagID(db *gorm.DB, tagID uint32, pageOffset, pageSize int
 		}
 		articles = append(articles, r)
 	}
+
 	return articles, nil
 }
 
@@ -104,5 +105,6 @@ func (a Article) CountByTagID(db *gorm.DB, tagID uint32) (int, error) {
 	if err != nil {
 		return 0, err
 	}
+
 	return count, nil
 }

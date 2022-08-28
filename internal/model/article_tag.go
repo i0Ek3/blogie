@@ -18,6 +18,7 @@ func (a ArticleTag) GetByAID(db *gorm.DB) (ArticleTag, error) {
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return articleTag, err
 	}
+
 	return articleTag, nil
 }
 
@@ -26,6 +27,7 @@ func (a ArticleTag) ListByTID(db *gorm.DB) ([]*ArticleTag, error) {
 	if err := db.Where("tag_id = ? AND is_del = ?", a.TagID, 0).Find(&articleTags).Error; err != nil {
 		return nil, err
 	}
+
 	return articleTags, nil
 }
 

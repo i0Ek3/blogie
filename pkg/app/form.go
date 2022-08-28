@@ -28,6 +28,7 @@ func (v ValidErrors) Errors() []string {
 	for _, err := range v {
 		errs = append(errs, err.Error())
 	}
+
 	return errs
 }
 
@@ -48,6 +49,7 @@ func bindAndValid(c *gin.Context, err error) (bool, ValidErrors) {
 		}
 		return false, errs
 	}
+
 	return true, nil
 }
 
@@ -56,10 +58,12 @@ func BindAndValid(c *gin.Context, v any) (bool, ValidErrors) {
 	if err != nil && err.Error() == "EOF" {
 		err = c.ShouldBind(v)
 	}
+
 	return bindAndValid(c, err)
 }
 
 func BindAndValidHeader(c *gin.Context, v any) (bool, ValidErrors) {
 	err := c.ShouldBindHeader(v)
+
 	return bindAndValid(c, err)
 }

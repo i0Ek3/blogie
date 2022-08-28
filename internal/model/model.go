@@ -8,8 +8,8 @@ import (
 	"github.com/i0Ek3/blogie/pkg/setting"
 	"github.com/jinzhu/gorm"
 
-	otg "github.com/smacker/opentracing-gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	otg "github.com/smacker/opentracing-gorm"
 )
 
 const (
@@ -133,5 +133,6 @@ func addExtraSpaceIfExist(str string) string {
 	if str != "" {
 		return " " + str
 	}
+
 	return ""
 }

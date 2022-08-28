@@ -1,9 +1,10 @@
 package setting
 
 import (
+	"log"
+
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
-	"log"
 )
 
 type Setting struct {
@@ -26,6 +27,7 @@ func NewSetting(configs ...string) (*Setting, error) {
 	}
 	s := &Setting{vp}
 	s.WatchSettingChange()
+
 	return s, nil
 }
 
