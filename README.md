@@ -293,6 +293,9 @@ Part1 = base64UrlEncode(Payload)
 Part3 = HMACSHA256(Part1 + "." + Part2, secret)
 ```
 
+More details about JWT please check [here](https://jwt.io/introduction/).
+
+
 ### Middleware
 
 #### Access Log
