@@ -64,6 +64,14 @@ type EnableSettingS struct {
 	Debug  bool
 }
 
+type RedisSettingS struct {
+	Host        string
+	Password    string
+	MaxIdle     int
+	MaxActive   int
+	IdleTimeout time.Duration
+}
+
 var sections = make(map[string]any)
 
 func (s *Setting) ReadSection(k string, v any) error {

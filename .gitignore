@@ -5,7 +5,12 @@
 .vscode
 .idea
 
+# Hidden files
+docs/drawio/.$blogie.drawio.bkp
+
 # Project files
 vendor
-blogie
 storage
+blogie
+*.rdb
+Dockerfile

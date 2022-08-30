@@ -34,6 +34,14 @@ Database:
   MaxIdleConns: 10
   MaxOpenConns: 30
 
+# Redis cache
+Redis:
+  Host: 127.0.0.1:6379
+  Password:
+  MaxIdle: 30
+  MaxActive: 30
+  IdelTimeout: 200
+
 # JWT config
 JWT:
   Secret: i0Ek3

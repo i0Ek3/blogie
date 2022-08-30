@@ -108,3 +108,9 @@ func (a Article) CountByTagID(db *gorm.DB, tagID uint32) (int, error) {
 
 	return count, nil
 }
+
+func CleanAllArticle(db *gorm.DB) bool {
+	db.Unscoped().Where("deleted_on != ? ", 0).Delete(&Article{})
+
+	return true
+}

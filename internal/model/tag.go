@@ -92,3 +92,9 @@ func (t Tag) Delete(db *gorm.DB) error {
 
 	return err
 }
+
+func CleanAllTag(db *gorm.DB) bool {
+	db.Unscoped().Where("deleted_on != ? ", 0).Delete(&Tag{})
+
+	return true
+}

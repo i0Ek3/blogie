@@ -13,6 +13,7 @@ var (
 	JWTSetting      *setting.JWTSettingS
 	EmailSetting    *setting.EmailSettingS
 	EnableSetting   *setting.EnableSettingS
+	RedisSetting    *setting.RedisSettingS
 
 	// Logger defines a logger object
 	Logger *logger.Logger

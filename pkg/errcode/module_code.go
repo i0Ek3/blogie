@@ -1,7 +1,7 @@
 package errcode
 
 var (
-	ErrorGetTagFail 	= NewError(200100, "Failed to get tag")
+	ErrorGetTagFail     = NewError(200100, "Failed to get tag")
 	ErrorGetTagListFail = NewError(200101, "Failed to get tag list")
 	ErrorCreateTagFail  = NewError(200102, "Failed to create tag")
 	ErrorUpdateTagFail  = NewError(200103, "Failed to update tag")
