@@ -28,7 +28,7 @@ Database:
   Password: 
   Host: 127.0.0.1:3306
   DBName: blogie
-  TablePrefix: blog_
+  TablePrefix: blogie_
   Charset: utf8
   ParseTime: True
   MaxIdleConns: 10

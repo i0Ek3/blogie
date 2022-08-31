@@ -13,4 +13,3 @@ vendor
 storage
 blogie
 *.rdb
-Dockerfile

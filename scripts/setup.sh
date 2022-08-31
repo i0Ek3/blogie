@@ -23,7 +23,6 @@ install_mysql_for_linux() {
 install_docker_for_linux() {
     update_for_linux
     sudo apt install -y docker docker-compose
-    docker-compose up -d
 }
 
 install_mysql_for_mac() {
@@ -36,7 +35,6 @@ install_mysql_for_mac() {
 install_docker_for_mac() {
     update_for_mac
     brew install docker docker-compose
-    docker-compose up -d
 }
 
 install_mysql_and_docker() {
@@ -55,9 +53,31 @@ install_mysql_and_docker() {
     fi
 }
 
+build_image_then_run() {
+    docker pull mysql
+    docker build -t blogie-scratch .
+    docker run --link mysql:mysql -p 8080:8080 blogie-scratch
+}
+
+run_docker() {
+    df=./Dockerfile
+    dc=./docker-compose.yml
+
+    if [ -f "$df" ]
+    then
+        build_image_then_run
+    elif [ -f "$dc" ]
+    then
+        docker-compose up -d
+    else
+        echo "Get $df or $dc first!"
+    fi
+}
+
 main() {
     setup_goenv
     install_mysql_and_docker
+    run_docker
     echo -n "All done!"
 }
 

@@ -298,6 +298,8 @@ More details about JWT please check [here](https://jwt.io/introduction/).
 
 ### Middleware
 
+Some common application middleware can solve most problems in the project. Therefore, in our project, we implemented some basic application middleware, such as access log, recovery, service information storage, rate limiter, redis cache, circuit breaker, cron, timeout control, etc.
+
 #### Access Log
 
 Access log basically records the request method of each request, the start time of the method call, the end time of the method call, the method response result, and the status code of the method response result. and other additional attributes to achieve the effect of log link tracing.
@@ -310,9 +312,21 @@ It is very important for abnormal capture and timely alarm notification, so we n
 
 Usually we often need to set some internal information in the process, such as the basic information such as the application name and the application version number, or the information storage of business attributes. At this time, there is a unified place to deal with.
 
-#### Interface Limiter
+#### Rate Limiter
 
 During the operation of the application, new clients will be accessed constantly, and sometimes there will be a peak of traffic (such as marketing activities). It is very likely to cause accidents, so we often have a variety of means to restrict peaks, and the rate-limiting control of the application interface is one of the methods for the application interface.
+
+#### Redis Cache
+
+> TODO.
+
+#### Cron
+
+In business scenarios, we usually need to delete some invalid data at a fixed point in time, so as to achieve the purpose of scheduled task scheduling management. But if it is hardcoded, it is obviously not elegant. Therefore, we implemented the timer middleware with the help of the cron library in the project to complete the requirement of regularly deleting invalid data. This library implements the cron spec parser and task runner, making it easier to use and integrate in our projects.
+
+#### Circuit Breaker
+
+Circuit breakers are the fuses in the underlying service, and its core is fail fast. When the downstream service is unable to provide the service due to overload or failure, we need to let the upstream service know in time, and temporarily fuse the call chain between the caller and the provider, so as to avoid the chain reaction of small failures causing the entire system to be paralyzed or even damaged. Therefore, we provide circuit breaker middleware in the project to disconnect the call chain of abnormal services, so as not to affect the normal use of other services.
 
 #### Timeout Control
 
