@@ -33,7 +33,7 @@ func NewDBEngine(dbSetting *setting.DatabaseSettingS) (*gorm.DB, error) {
 	db, err := gorm.Open(dbSetting.DBType, fmt.Sprintf(s,
 		dbSetting.UserName,
 		dbSetting.Password,
-		dbSetting.Host,
+        dbSetting.Host,
 		dbSetting.DBName,
 		dbSetting.Charset,
 		dbSetting.ParseTime,

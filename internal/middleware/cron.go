@@ -14,21 +14,26 @@ func Cron(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		log.Println("Starting...")
 		cr := cron.New()
-		cr.AddFunc("* * * * * *", func() {
+		err := cr.AddFunc("* * * * * *", func() {
 			log.Println("Run model.CleanAllTag...")
 			model.CleanAllTag(db)
 		})
-		cr.AddFunc("* * * * * *", func() {
+		if err != nil {
+			return
+		}
+		err = cr.AddFunc("* * * * * *", func() {
 			log.Println("Run model.CleanAllArticle...")
 			model.CleanAllArticle(db)
 		})
+		if err != nil {
+			return
+		}
 		cr.Start()
 		t := time.NewTimer(time.Second * 10)
 		for {
 			select {
 			case <-t.C:
 				t.Reset(time.Second * 10)
-			default:
 				c.Next()
 			}
 		}

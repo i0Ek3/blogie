@@ -27,8 +27,3 @@ var (
 	UnauthorizedTokenGenerate = NewError(100204, "Failed to generate token")
 	TooManyRequests           = NewError(100301, "Too many requests")
 )
-
-const (
-	CacheTag     = "TAG"
-	CacheArticle = "ARTICLE"
-)

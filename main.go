@@ -16,6 +16,7 @@ import (
 	"github.com/i0Ek3/blogie/internal/model"
 	"github.com/i0Ek3/blogie/internal/routers"
 	"github.com/i0Ek3/blogie/pkg/logger"
+	"github.com/i0Ek3/blogie/pkg/redis"
 	"github.com/i0Ek3/blogie/pkg/setting"
 	"github.com/i0Ek3/blogie/pkg/tracer"
 	"github.com/i0Ek3/blogie/pkg/validator"
@@ -57,6 +58,11 @@ func init() {
 	err = setupLogger()
 	if err != nil {
 		log.Fatalf("init.setupLogger err: %v", err)
+	}
+
+	err = setupRedis()
+	if err != nil {
+		log.Fatalf("init.setupRedis err: %v", err)
 	}
 
 	err = setupTracer()
@@ -174,6 +180,12 @@ func setupSetting() error {
 		return err
 	}
 
+	err = s.ReadSection("Redis", &global.RedisSetting)
+	//fmt.Println("DEBUG------->global.RedisSetting", global.RedisSetting)
+	if err != nil {
+		return err
+	}
+
 	err = s.ReadSection("Enable", &global.EnableSetting)
 	//fmt.Println("DEBUG------->global.EnableSetting", global.EnableSetting)
 	if err != nil {
@@ -184,6 +196,7 @@ func setupSetting() error {
 	global.JWTSetting.Expire *= time.Second
 	global.ServerSetting.ReadTimeout *= time.Second
 	global.ServerSetting.WriteTimeout *= time.Second
+	global.RedisSetting.IdleTimeout *= time.Second
 
 	if port != "" {
 		global.ServerSetting.HttpPort = port
@@ -214,6 +227,10 @@ func setupLogger() error {
 	}, "", log.LstdFlags)
 
 	return nil
+}
+
+func setupRedis() error {
+	return redis.Setup()
 }
 
 func setupTracer() error {

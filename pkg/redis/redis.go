@@ -2,10 +2,9 @@ package redis
 
 import (
 	"encoding/json"
-	"time"
-
 	"github.com/gomodule/redigo/redis"
 	"github.com/i0Ek3/blogie/global"
+	"time"
 )
 
 var RedisConn *redis.Pool
@@ -22,7 +21,10 @@ func Setup() error {
 			}
 			if global.RedisSetting.Password != "" {
 				if _, err := c.Do("AUTH", global.RedisSetting.Password); err != nil {
-					c.Close()
+					err := c.Close()
+					if err != nil {
+						return nil, err
+					}
 					return nil, err
 				}
 			}
@@ -33,13 +35,17 @@ func Setup() error {
 			return err
 		},
 	}
-
 	return nil
 }
 
 func Set(key string, data interface{}, time int) error {
 	conn := RedisConn.Get()
-	defer conn.Close()
+	defer func(conn redis.Conn) {
+		err := conn.Close()
+		if err != nil {
+			return
+		}
+	}(conn)
 
 	value, err := json.Marshal(data)
 	if err != nil {
@@ -61,7 +67,12 @@ func Set(key string, data interface{}, time int) error {
 
 func Exists(key string) bool {
 	conn := RedisConn.Get()
-	defer conn.Close()
+	defer func(conn redis.Conn) {
+		err := conn.Close()
+		if err != nil {
+			return
+		}
+	}(conn)
 
 	exists, err := redis.Bool(conn.Do("EXISTS", key))
 	if err != nil {
@@ -73,7 +84,12 @@ func Exists(key string) bool {
 
 func Get(key string) ([]byte, error) {
 	conn := RedisConn.Get()
-	defer conn.Close()
+	defer func(conn redis.Conn) {
+		err := conn.Close()
+		if err != nil {
+			return
+		}
+	}(conn)
 
 	reply, err := redis.Bytes(conn.Do("GET", key))
 	if err != nil {
@@ -85,14 +101,24 @@ func Get(key string) ([]byte, error) {
 
 func Delete(key string) (bool, error) {
 	conn := RedisConn.Get()
-	defer conn.Close()
+	defer func(conn redis.Conn) {
+		err := conn.Close()
+		if err != nil {
+			return
+		}
+	}(conn)
 
 	return redis.Bool(conn.Do("DEL", key))
 }
 
 func LikeDeletes(key string) error {
 	conn := RedisConn.Get()
-	defer conn.Close()
+	defer func(conn redis.Conn) {
+		err := conn.Close()
+		if err != nil {
+			return
+		}
+	}(conn)
 
 	keys, err := redis.Strings(conn.Do("KEYS", "*"+key+"*"))
 	if err != nil {

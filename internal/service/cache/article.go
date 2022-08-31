@@ -1,7 +1,7 @@
 package cache
 
 import (
-	"fmt"
+	"github.com/i0Ek3/blogie/internal/model"
 	"strconv"
 	"strings"
 
@@ -9,16 +9,15 @@ import (
 )
 
 type Article struct {
-	ID    int
+	model.Article
 	TagID int
-	State int
 
 	PageNum  int
 	PageSize int
 }
 
 func (a *Article) GetArticleKey() string {
-	return errcode.CacheArticle + "_" + strconv.Itoa(a.ID)
+	return errcode.CacheArticle + "_" + strconv.Itoa(int(a.ID))
 }
 
 func (a *Article) GetArticlesKey() string {
@@ -28,14 +27,12 @@ func (a *Article) GetArticlesKey() string {
 	}
 
 	if a.ID > 0 {
-		keys = append(keys, strconv.Itoa(a.ID))
+		keys = append(keys, strconv.Itoa(int(a.ID)))
 	}
 	if a.TagID > 0 {
 		keys = append(keys, strconv.Itoa(a.TagID))
 	}
-	if a.State >= 0 {
-		keys = append(keys, strconv.Itoa(a.State))
-	}
+	keys = append(keys, strconv.Itoa(int(a.State)))
 	if a.PageNum > 0 {
 		keys = append(keys, strconv.Itoa(a.PageNum))
 	}
