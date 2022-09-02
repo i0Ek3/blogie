@@ -8,10 +8,11 @@ import (
 
 func Redis() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		err := redis.Setup()
+		err := redis.SetupRedisConn()
 		if err != nil {
 			return 
 		}
+		// TODO
 		c.Next()
 	}
 }

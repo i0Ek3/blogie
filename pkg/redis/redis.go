@@ -9,7 +9,7 @@ import (
 
 var RedisConn *redis.Pool
 
-func Setup() error {
+func SetupRedisConn() error {
 	RedisConn = &redis.Pool{
 		MaxIdle:     global.RedisSetting.MaxIdle,
 		MaxActive:   global.RedisSetting.MaxActive,
@@ -28,13 +28,16 @@ func Setup() error {
 					return nil, err
 				}
 			}
+
 			return c, err
 		},
 		TestOnBorrow: func(c redis.Conn, t time.Time) error {
 			_, err := c.Do("PING")
+
 			return err
 		},
 	}
+
 	return nil
 }
 
