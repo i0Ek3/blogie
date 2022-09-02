@@ -247,7 +247,7 @@ func setupValidator() error {
 			return err
 		}
 	}
-	global.Ut = uni
+	global.Trans = uni
 
 	return nil
 }

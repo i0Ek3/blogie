@@ -14,7 +14,6 @@ import (
 
 const (
 	StateOpen  = 1
-	StateClose = 0
 )
 
 // Model defines common fields of database table

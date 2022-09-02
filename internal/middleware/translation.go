@@ -8,11 +8,11 @@ import (
 func Translations() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		locale := c.GetHeader("locale")
-		trans, found := global.Ut.GetTranslator(locale)
+		trans, found := global.Trans.GetTranslator(locale)
 		if found {
 			c.Set("trans", trans)
 		} else {
-			enTrans, _ := global.Ut.GetTranslator("en")
+			enTrans, _ := global.Trans.GetTranslator("en")
 			c.Set("trans", enTrans)
 		}
 		c.Next()

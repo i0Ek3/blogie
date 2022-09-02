@@ -7,5 +7,5 @@ import (
 
 var (
 	Validator *validator.CustomValidator
-	Ut        *ut.UniversalTranslator
+	Trans     *ut.UniversalTranslator
 )
