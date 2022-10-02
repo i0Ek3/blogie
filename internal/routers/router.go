@@ -36,6 +36,7 @@ func NewRouter() *gin.Engine {
 
 	r.Use(middleware.RateLimiter(methodLimiters))
 	r.Use(middleware.ContextTimeout(global.AppSetting.ContextTimeout * time.Second))
+	r.Use(middleware.Cors())
 	r.Use(middleware.AppInfo())
 	r.Use(middleware.Tracing())
 	r.Use(middleware.Translations())
