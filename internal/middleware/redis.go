@@ -1,18 +1,18 @@
 package middleware
 
 import (
-	"github.com/gin-gonic/gin"
+	"time"
 
-	"github.com/i0Ek3/blogie/pkg/redis"
+	cache "github.com/chenyahui/gin-cache"
+	"github.com/chenyahui/gin-cache/persist"
+	"github.com/gin-gonic/gin"
+	"github.com/go-redis/redis/v8"
 )
 
 func Redis() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		err := redis.SetupRedisConn()
-		if err != nil {
-			return 
-		}
-		// TODO
-		c.Next()
-	}
+	redisStore := persist.NewRedisStore(redis.NewClient(&redis.Options{
+		Network: "tcp",
+		Addr:    "127.0.0.1:6379",
+	}))
+	return cache.CacheByRequestURI(redisStore, 2*time.Second)
 }
