@@ -18,6 +18,7 @@ func RateLimiter(l limiter.BaseLimiter) gin.HandlerFunc {
 				response := app.NewResponse(c)
 				response.ToErrorResponse(errcode.TooManyRequests)
 				c.Abort()
+
 				return
 			}
 		}

@@ -1,24 +1,27 @@
 package middleware
 
 import (
-	"time"
-
 	"github.com/afex/hystrix-go/hystrix"
 	"github.com/gin-gonic/gin"
 )
 
 func CircuitBreaker() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		hystrix.ConfigureCommand("circuit breaker", hystrix.CommandConfig{
-			Timeout:               int(10 * time.Second),
-			MaxConcurrentRequests: 100,
-			ErrorPercentThreshold: 25,
-		})
+	hystrix.ConfigureCommand("blogie", hystrix.CommandConfig{
+		Timeout:                10,
+		MaxConcurrentRequests:  100,
+		ErrorPercentThreshold:  25,
+		RequestVolumeThreshold: 3,
+		SleepWindow:            1000,
+	})
 
-		hystrix.Go("circuit breaker", func() error {
+	return func(c *gin.Context) {
+		hystrix.Go("blogie", func() error {
 			c.Next()
+
 			return nil
 		}, func(err error) error {
+			c.Abort()
+
 			return err
 		})
 	}

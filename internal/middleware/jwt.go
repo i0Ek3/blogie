@@ -12,6 +12,7 @@ func JWT() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		if global.ServerSetting.RunMode == "debug" {
 			c.Next()
+
 			return
 		}
 		var (
@@ -41,6 +42,7 @@ func JWT() gin.HandlerFunc {
 			response := app.NewResponse(c)
 			response.ToErrorResponse(ecode)
 			c.Abort()
+
 			return
 		}
 		c.Next()

@@ -1,22 +1,28 @@
 package middleware
 
 import (
-	"time"
+	"net/http"
 
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 func Cors() gin.HandlerFunc {
-	return cors.New(cors.Config{
-		AllowOriginFunc: func(origin string) bool {
-			return true
-		},
-		AllowMethods:     []string{"PUT", "PATCH", "GET", "DELETE", "POST"},
-		AllowHeaders:     []string{"Origin", "Authorization", "Content-Length", "Content-Type"},
-		ExposeHeaders:    []string{"Content-Length"},
-		AllowCredentials: true,
-		MaxAge:           12 * time.Hour,
-		AllowWebSockets:  true,
-	})
+	return func(c *gin.Context) {
+		method := c.Request.Method
+		origin := c.Request.Header.Get("Origin")
+		c.Header("Access-Control-Allow-Origin", origin)
+		c.Header("Access-Control-Allow-Headers", "Content-Type, Content-Length, Authorization")
+		c.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT, PATCH")
+		c.Header("Access-Control-Expose-Headers", "Content-Length")
+		c.Header("Access-Control-Allow-Credentials", "true")
+		c.Header("Access-Control-Max-Age", "12 * time.Hour")
+		c.Header("Access-Control-Allow-Websockets", "true")
+
+		if method == "OPTIONS" || method == "PATCH" {
+			c.AbortWithStatus(http.StatusNoContent)
+
+			return
+		}
+		c.Next()
+	}
 }
