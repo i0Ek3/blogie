@@ -21,12 +21,14 @@ func (u Upload) UploadFile(c *gin.Context) {
 	file, fileHeader, err := c.Request.FormFile("file")
 	if err != nil {
 		response.ToErrorResponse(errcode.InvalidParams.WithDetails(err.Error()))
+
 		return
 	}
 
 	fileType := convert.StrTo(c.PostForm("type")).MustInt()
 	if fileHeader == nil || fileType <= 0 {
 		response.ToErrorResponse(errcode.InvalidParams)
+
 		return
 	}
 
@@ -35,6 +37,7 @@ func (u Upload) UploadFile(c *gin.Context) {
 	if err != nil {
 		global.Logger.Errorf(c, "svc.UploadFile err: %v", err)
 		response.ToErrorResponse(errcode.ErrorUploadFileFail.WithDetails(err.Error()))
+
 		return
 	}
 

@@ -35,9 +35,11 @@ func Expvar(c *gin.Context) {
 	if err != nil {
 		return
 	}
+
 	expvar.Do(func(kv expvar.KeyValue) {
 		report(kv.Key, kv.Value)
 	})
+	
 	_, err = fmt.Fprintf(c.Writer, "\n}\n")
 	if err != nil {
 		return

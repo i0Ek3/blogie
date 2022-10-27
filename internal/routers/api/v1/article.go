@@ -31,6 +31,7 @@ func (a Article) Get(c *gin.Context) {
 	if !valid {
 		global.Logger.Errorf(c, "app.BindAndValid errs: %v", errs)
 		response.ToErrorResponse(errcode.InvalidParams.WithDetails(errs.Errors()...))
+
 		return
 	}
 
@@ -39,6 +40,7 @@ func (a Article) Get(c *gin.Context) {
 	if err != nil {
 		global.Logger.Errorf(c, "svc.GetArticle err: %v", err)
 		response.ToErrorResponse(errcode.ErrorGetArticleFail)
+
 		return
 	}
 
@@ -64,6 +66,7 @@ func (a Article) List(c *gin.Context) {
 	if !valid {
 		global.Logger.Errorf(c, "app.BindAndValid errs: %v", errs)
 		response.ToErrorResponse(errcode.InvalidParams.WithDetails(errs.Errors()...))
+
 		return
 	}
 
@@ -73,6 +76,7 @@ func (a Article) List(c *gin.Context) {
 	if err != nil {
 		global.Logger.Errorf(c, "svc.GetArticleList err: %v", err)
 		response.ToErrorResponse(errcode.ErrorGetArticlesFail)
+
 		return
 	}
 
@@ -100,6 +104,7 @@ func (a Article) Create(c *gin.Context) {
 	if !valid {
 		global.Logger.Errorf(c, "app.BindAndValid errs: %v", errs)
 		response.ToErrorResponse(errcode.InvalidParams.WithDetails(errs.Errors()...))
+
 		return
 	}
 
@@ -108,6 +113,7 @@ func (a Article) Create(c *gin.Context) {
 	if err != nil {
 		global.Logger.Errorf(c, "svc.CreateArticle err: %v", err)
 		response.ToErrorResponse(errcode.ErrorCreateArticleFail)
+
 		return
 	}
 
@@ -134,6 +140,7 @@ func (a Article) Update(c *gin.Context) {
 	if !valid {
 		global.Logger.Errorf(c, "app.BindAndValid errs: %v", errs)
 		response.ToErrorResponse(errcode.InvalidParams.WithDetails(errs.Errors()...))
+
 		return
 	}
 
@@ -142,6 +149,7 @@ func (a Article) Update(c *gin.Context) {
 	if err != nil {
 		global.Logger.Errorf(c, "svc.UpdateArticle err: %v", err)
 		response.ToErrorResponse(errcode.ErrorUpdateArticleFail)
+
 		return
 	}
 
@@ -163,6 +171,7 @@ func (a Article) Delete(c *gin.Context) {
 	if !valid {
 		global.Logger.Errorf(c, "app.BindAndValid errs: %v", errs)
 		response.ToErrorResponse(errcode.InvalidParams.WithDetails(errs.Errors()...))
+
 		return
 	}
 
@@ -171,6 +180,7 @@ func (a Article) Delete(c *gin.Context) {
 	if err != nil {
 		global.Logger.Errorf(c, "svc.DeleteArticle err: %v", err)
 		response.ToErrorResponse(errcode.ErrorDeleteArticleFail)
+
 		return
 	}
 

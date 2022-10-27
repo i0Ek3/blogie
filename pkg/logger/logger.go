@@ -60,6 +60,7 @@ func (l Level) String() string {
 	case LevelPanic:
 		return "panic"
 	}
+	
 	return ""
 }
 

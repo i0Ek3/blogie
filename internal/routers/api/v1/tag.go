@@ -31,6 +31,7 @@ func (t Tag) Get(c *gin.Context) {
 	if !valid {
 		global.Logger.Errorf(c, "app.BindAndValid errs: %v", errs)
 		response.ToErrorResponse(errcode.InvalidParams.WithDetails(errs.Errors()...))
+
 		return
 	}
 
@@ -39,6 +40,7 @@ func (t Tag) Get(c *gin.Context) {
 	if err != nil {
 		global.Logger.Errorf(c, "svc.GetTag err: %v", err)
 		response.ToErrorResponse(errcode.ErrorGetTagFail)
+
 		return
 	}
 
@@ -63,6 +65,7 @@ func (t Tag) List(c *gin.Context) {
 	if !valid {
 		global.Logger.Errorf(c, "app.BindAndValid errs: %v", errs)
 		response.ToErrorResponse(errcode.InvalidParams.WithDetails(errs.Errors()...))
+
 		return
 	}
 
@@ -80,6 +83,7 @@ func (t Tag) List(c *gin.Context) {
 	if err != nil {
 		global.Logger.Errorf(c, "svc.GetTagList err: %v", err)
 		response.ToErrorResponse(errcode.ErrorGetTagListFail)
+
 		return
 	}
 
@@ -103,6 +107,7 @@ func (t Tag) Create(c *gin.Context) {
 	if !valid {
 		global.Logger.Errorf(c, "app.BindAndValid errs: %v", errs)
 		response.ToErrorResponse(errcode.InvalidParams.WithDetails(errs.Errors()...))
+
 		return
 	}
 
@@ -111,6 +116,7 @@ func (t Tag) Create(c *gin.Context) {
 	if err != nil {
 		global.Logger.Errorf(c, "svc.CreateTag err: %v", err)
 		response.ToErrorResponse(errcode.ErrorCreateTagFail)
+
 		return
 	}
 
@@ -143,6 +149,7 @@ func (t Tag) Update(c *gin.Context) {
 	if err != nil {
 		global.Logger.Errorf(c, "svc.UpdateTag err: %v", err)
 		response.ToErrorResponse(errcode.ErrorUpdateTagFail)
+
 		return
 	}
 
@@ -164,6 +171,7 @@ func (t Tag) Delete(c *gin.Context) {
 	if !valid {
 		global.Logger.Errorf(c, "app.BindAndValid errs: %v", errs)
 		response.ToErrorResponse(errcode.InvalidParams.WithDetails(errs.Errors()...))
+
 		return
 	}
 
@@ -172,6 +180,7 @@ func (t Tag) Delete(c *gin.Context) {
 	if err != nil {
 		global.Logger.Errorf(c, "svc.DeleteTag err: %v", err)
 		response.ToErrorResponse(errcode.ErrorDeleteTagFail)
+
 		return
 	}
 

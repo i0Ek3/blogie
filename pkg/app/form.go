@@ -47,6 +47,7 @@ func bindAndValid(c *gin.Context, err error) (bool, ValidErrors) {
 				Message: value,
 			})
 		}
+		
 		return false, errs
 	}
 
