@@ -14,10 +14,12 @@ func Tracing() func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var newCtx context.Context
 		var span opentracing.Span
-		spanCtx, err := opentracing.GlobalTracer().Extract(
+		
+        spanCtx, err := opentracing.GlobalTracer().Extract(
 			opentracing.HTTPHeaders,
 			opentracing.HTTPHeadersCarrier(c.Request.Header),
 		)
+
 		if err != nil {
 			span, newCtx = opentracing.StartSpanFromContextWithTracer(
 				c.Request.Context(),
@@ -38,13 +40,15 @@ func Tracing() func(c *gin.Context) {
 		var traceID string
 		var spanID string
 		var spanContext = span.Context()
-		switch spanContext.(type) {
+		
+        switch spanContext.(type) {
 		case jaeger.SpanContext:
 			jaegerContext := spanContext.(jaeger.SpanContext)
 			traceID = jaegerContext.TraceID().String()
 			spanID = jaegerContext.SpanID().String()
 		}
-		c.Set("X-Trace-ID", traceID)
+		
+        c.Set("X-Trace-ID", traceID)
 		c.Set("X-Span-ID", spanID)
 		c.Request = c.Request.WithContext(newCtx)
 		c.Next()

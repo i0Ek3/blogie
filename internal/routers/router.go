@@ -6,6 +6,7 @@ import (
 
 	v1 "github.com/i0Ek3/blogie/internal/routers/api/v1"
 	"github.com/i0Ek3/blogie/pkg/debug"
+	"github.com/i0Ek3/blogie/pkg/limiter"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
@@ -14,15 +15,16 @@ import (
 	"github.com/i0Ek3/blogie/global"
 	"github.com/i0Ek3/blogie/internal/middleware"
 	"github.com/i0Ek3/blogie/internal/routers/api"
-	"github.com/i0Ek3/blogie/pkg/limiter"
 )
 
-var methodLimiters = limiter.NewMethodLimiter().AddBuckets(limiter.BucketRule{
-	Key:          "/auth",
-	FillInterval: time.Second,
-	Capacity:     10,
-	Quantum:      10,
-})
+var (
+	limiters = limiter.NewMethodLimiter().AddBuckets(limiter.BucketRule{
+		Key:          "/auth",
+		FillInterval: time.Second,
+		Capacity:     10,
+		Quantum:      10,
+	})
+)
 
 func NewRouter() *gin.Engine {
 	r := gin.New()
@@ -34,8 +36,10 @@ func NewRouter() *gin.Engine {
 		r.Use(middleware.Recovery())
 	}
 
-	r.Use(middleware.RateLimiter(methodLimiters))
-	r.Use(middleware.ContextTimeout(global.AppSetting.ContextTimeout * time.Second))
+    d := global.AppSetting.ContextTimeout * time.Second
+	r.Use(middleware.ContextTimeout(d))
+	r.Use(middleware.RateLimiter(limiters))
+	r.Use(middleware.CircuitBreaker())
 	r.Use(middleware.Cors())
 	r.Use(middleware.AppInfo())
 	r.Use(middleware.Tracing())
@@ -51,6 +55,7 @@ func NewRouter() *gin.Engine {
 	// Upload file and access file on static address
 	upload := api.NewUpload()
 	r.POST("/upload/file", upload.UploadFile)
+
 	// Setting up file services to provide access to static resources
 	r.StaticFS("/static", http.Dir(global.AppSetting.UploadSavePath))
 
@@ -58,6 +63,7 @@ func NewRouter() *gin.Engine {
 
 	tag := v1.NewTag()
 	article := v1.NewArticle()
+
 	apiv1 := r.Group("api/v1")
 	apiv1.Use(middleware.JWT(), middleware.Cron(global.DBEngine))
 	{

@@ -11,7 +11,7 @@ import (
 )
 
 func Quit(ser *http.Server) {
-	quit := make(chan os.Signal, 2)
+	quit := make(chan os.Signal, 1)
 	// NOTES: SIGINT(2) denotes signal sent by Ctrl+C, SIGTERM(15) denotes signal can be blocked,
 	// SIGQUIT(3) denotes signal sent by Ctrl+\, SIGKILL(9) denotes signal non-catchable.
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)

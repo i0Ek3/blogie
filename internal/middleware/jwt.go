@@ -15,16 +15,19 @@ func JWT() gin.HandlerFunc {
 
 			return
 		}
+
 		var (
 			token string
 			ecode = errcode.Success
 		)
+
 		// Fetch the param token from given field or header field
 		if s, exist := c.GetQuery("token"); exist {
 			token = s
 		} else {
 			token = c.GetHeader("token")
 		}
+
 		if token == "" {
 			ecode = errcode.InvalidParams
 		} else {
@@ -38,7 +41,8 @@ func JWT() gin.HandlerFunc {
 				}
 			}
 		}
-		if ecode != errcode.Success {
+
+        if ecode != errcode.Success {
 			response := app.NewResponse(c)
 			response.ToErrorResponse(ecode)
 			c.Abort()

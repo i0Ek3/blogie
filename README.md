@@ -430,4 +430,4 @@ In this project, we use signal to implement graceful shutdown and restart. On Un
 
 ## Credit
 
-[marmotedu](https://github.com/marmotedu) | [eddycjy](https://github.com/eddycjy) | [minibear2333](https://github.com/minibear2333) | demon | [Go Web Examples](https://gowebexamples.com)
+[marmotedu](https://github.com/marmotedu) | [eddycjy](https://github.com/eddycjy) | [minibear2333](https://github.com/minibear2333)

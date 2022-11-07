@@ -13,23 +13,29 @@ import (
 func Cron(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		log.Println("Starting...")
+
 		cr := cron.New()
 		err := cr.AddFunc("* * * * * *", func() {
 			log.Println("Run model.CleanAllTag...")
 			model.CleanAllTag(db)
 		})
-		if err != nil {
+		
+        if err != nil {
 			return
 		}
-		err = cr.AddFunc("* * * * * *", func() {
+		
+        err = cr.AddFunc("* * * * * *", func() {
 			log.Println("Run model.CleanAllArticle...")
 			model.CleanAllArticle(db)
 		})
-		if err != nil {
+		
+        if err != nil {
 			return
 		}
-		cr.Start()
-		t := time.NewTimer(time.Second * 10)
+		
+        cr.Start()
+		
+        t := time.NewTimer(time.Second * 10)
 		for {
 			select {
 			case <-t.C:
