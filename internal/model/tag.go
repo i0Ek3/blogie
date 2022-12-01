@@ -21,7 +21,7 @@ type TagSwagger struct {
 
 // TableName returns the name of tag table
 func (t Tag) TableName() string {
-	return "blog_tag"
+	return "blogie_tag"
 }
 
 func (t Tag) Get(db *gorm.DB) (Tag, error) {

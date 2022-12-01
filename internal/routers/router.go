@@ -65,7 +65,7 @@ func NewRouter() *gin.Engine {
 	article := v1.NewArticle()
 
 	apiv1 := r.Group("api/v1")
-	apiv1.Use(middleware.JWT(), middleware.Cron(global.DBEngine))
+	apiv1.Use(middleware.JWT(), middleware.Cron(global.GDB))
 	{
 		tags := apiv1.Group("/tags")
 		{

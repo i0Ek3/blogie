@@ -145,7 +145,7 @@ func setupSetting() error {
 
 func setupDBEngine() error {
 	var err error
-	global.DBEngine, err = model.NewDBEngine(global.DatabaseSetting)
+	global.GDB, err = model.NewDBEngine(global.DatabaseSetting)
 	if err != nil {
 		return err
 	}

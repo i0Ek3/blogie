@@ -22,7 +22,7 @@ type ArticleSwagger struct {
 }
 
 func (a Article) TableName() string {
-	return "blog_article"
+	return "blogie_article"
 }
 
 func (a Article) Get(db *gorm.DB) (Article, error) {
@@ -86,7 +86,8 @@ func (a Article) ListByTagID(db *gorm.DB, tagID uint32, pageOffset, pageSize int
 	var articles []*ArticleRow
 	for rows.Next() {
 		r := &ArticleRow{}
-		if err := rows.Scan(&r.ArticleID, &r.ArticleTitle, &r.ArticleDesc, &r.CoverImageUrl, &r.Content, &r.TagID, &r.TagName); err != nil {
+		err := rows.Scan(&r.ArticleID, &r.ArticleTitle, &r.ArticleDesc, &r.CoverImageUrl, &r.Content, &r.TagID, &r.TagName)
+		if err != nil {
 			return nil, err
 		}
 		articles = append(articles, r)

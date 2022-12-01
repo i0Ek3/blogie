@@ -69,7 +69,7 @@ func watchdog() {
 			}
 		}
 	}()
-	path := "/Volumes/2Tmac/github/mine/blogie/configs/config.yaml"
+	path := "/path/to/config.yaml"
 	_ = watcher.Add(path)
 	<-done
 }

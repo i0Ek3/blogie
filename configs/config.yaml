@@ -25,14 +25,14 @@ App:
 Database:
   DBType: mysql
   Username: root
-  Password: 
+  Password: 123456
   Host: 127.0.0.1:3306
   DBName: blogie
   TablePrefix: blogie_
-  Charset: utf8
+  Charset: utf8mb4
   ParseTime: True
   MaxIdleConns: 10
-  MaxOpenConns: 30
+  MaxOpenConns: 100
 
 # Redis cache
 Redis:

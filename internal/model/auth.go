@@ -9,7 +9,7 @@ type Auth struct {
 }
 
 func (a Auth) TableName() string {
-	return "blog_auth"
+	return "blogie_auth"
 }
 
 func (a Auth) Get(db *gorm.DB) (Auth, error) {

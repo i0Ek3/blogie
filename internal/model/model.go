@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	StateOpen  = 1
+	StateOpen = 1
 )
 
 // Model defines common fields of database table
@@ -28,11 +28,11 @@ type Model struct {
 }
 
 func NewDBEngine(dbSetting *setting.DatabaseSettingS) (*gorm.DB, error) {
-	s := "%s:%s@tcp(%s)/%s?charset=%s&parseTime=%t&loc=Local"
-	db, err := gorm.Open(dbSetting.DBType, fmt.Sprintf(s,
+	dsn := "%s:%s@tcp(%s)/%s?charset=%s&parseTime=%t&loc=Local"
+	db, err := gorm.Open(dbSetting.DBType, fmt.Sprintf(dsn,
 		dbSetting.UserName,
 		dbSetting.Password,
-        dbSetting.Host,
+		dbSetting.Host,
 		dbSetting.DBName,
 		dbSetting.Charset,
 		dbSetting.ParseTime,

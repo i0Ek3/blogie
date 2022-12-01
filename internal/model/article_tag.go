@@ -9,7 +9,7 @@ type ArticleTag struct {
 }
 
 func (a ArticleTag) TableName() string {
-	return "blog_article_tag"
+	return "blogie_article_tag"
 }
 
 func (a ArticleTag) GetByAID(db *gorm.DB) (ArticleTag, error) {
