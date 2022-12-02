@@ -1,13 +1,13 @@
 version: '3.7'
 services:
-  blog_service:
+  blogie_service:
     image: mysql:5.7
     ports:
       - 3306:3306
     command: --init-file /data/application/init.sql
     volumes:
       - ./storage/mysql:/var/lib/mysql
-      - ./scripts/sql/blog.sql:/data/application/init.sql
+      - ./scripts/sql/blogie.sql:/data/application/init.sql
     container_name: blogie
     environment:
       - PUID=1000

@@ -17,7 +17,7 @@ install_mysql_for_linux() {
     update_for_linux
     sudo apt-get install -y mysql-server
     systemctl start mysql
-    sudo mysql -uroot < ./scripts/sql/blog.sql
+    sudo mysql -uroot < ./scripts/sql/blogie.sql
 }
 
 install_docker_for_linux() {
@@ -29,7 +29,7 @@ install_mysql_for_mac() {
     update_for_mac
     brew install mysql
     brew services start mysql
-    mysql -uroot < ./scripts/sql/blog.sql
+    mysql -uroot < ./scripts/sql/blogie.sql
 }
 
 install_docker_for_mac() {

@@ -105,8 +105,7 @@ In this part, we'll show you how this project work.
 You should install MySQL on your system first, and then create a database which named `blogie` and use this databse. If you have same system with mine(Unix), you can run the script directly to install and import blog.sql.
 
 ```shell
-# for Unix/Linux users
-# run command under the root folder of project
+# for Unix/Linux users, run command under the root folder of project
 # if you are macOS user, please make sure you have homebrew installed
 $ ./scripts/setup.sh
 
@@ -114,7 +113,7 @@ $ ./scripts/setup.sh
 $ mysql -uroot -p
 mysql> CREATE DATABASE blogie;
 mysql> USE blogie;
-mysql> SOURCE ./scripts/sql/blog.sql; # import blog.sql
+mysql> SOURCE ./scripts/sql/blogie.sql; # import blogie.sql
 ```
 
 After import blog.sql, it will create following four tables:
@@ -124,10 +123,10 @@ mysql> show tables;
 +------------------+
 | Tables_in_blogie |
 +------------------+
-| blog_article     |
-| blog_article_tag |
-| blog_auth        |
-| blog_tag         |
+| blogie_article     |
+| blogie_article_tag |
+| blogie_auth        |
+| blogie_tag         |
 +------------------+
 4 rows in set (0.00 sec)
 ```
@@ -316,10 +315,6 @@ Usually we often need to set some internal information in the process, such as t
 
 During the operation of the application, new clients will be accessed constantly, and sometimes there will be a peak of traffic (such as marketing activities). It is very likely to cause accidents, so we often have a variety of means to restrict peaks, and the rate-limiting control of the application interface is one of the methods for the application interface.
 
-#### Redis Cache
-
-> TODO.
-
 #### Cron
 
 In business scenarios, we usually need to delete some invalid data at a fixed point in time, so as to achieve the purpose of scheduled task scheduling management. But if it is hardcoded, it is obviously not elegant. Therefore, we implemented the timer middleware with the help of the cron library in the project to complete the requirement of regularly deleting invalid data. This library implements the cron spec parser and task runner, making it easier to use and integrate in our projects.
@@ -338,7 +333,7 @@ In this part, we use Jaeger to implement link tracing which support OpenTracing 
 
 Usually, when multiple distributed interfaces call each other and the response is particularly slow, we need to locate and solve the problem in time. Therefore, we need to do link tracing.
 
-> Please install and boot docker first.
+> Please install docker and boot it first.
 
 First, we use docker to install Jaeger with following command:
 
@@ -350,7 +345,7 @@ ne:latest
 
 And then, after you run the blogie service, you can open `http://localhost:16686/` to check Jaeger's Web UI to tracing interface calls.
 
-Also you can run the command `docker-compose up -d` under the root folder to enable Jaeger.
+Also you can run the command `docker-compose up -d` under the root folder to boot Jaeger service.
 
 ### Application Configuration
 

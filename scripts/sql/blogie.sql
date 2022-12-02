@@ -9,7 +9,7 @@ CREATE
 use blogie;
 
 -- create tag table
-CREATE TABLE `blog_tag` (
+CREATE TABLE `blogie_tag` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT '' COMMENT 'tag name',
   `created_on` int(10) unsigned DEFAULT '0' COMMENT 'created on',
@@ -23,7 +23,7 @@ CREATE TABLE `blog_tag` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='tag management';
 
 -- create article table
-CREATE TABLE `blog_article` (
+CREATE TABLE `blogie_article` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(100) DEFAULT '' COMMENT 'article title',
   `desc` varchar(255) DEFAULT '' COMMENT 'article desc',
@@ -40,7 +40,7 @@ CREATE TABLE `blog_article` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='article management';
 
 -- create article_tag table
-CREATE TABLE `blog_article_tag` (
+CREATE TABLE `blogie_article_tag` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `article_id` int(11) NOT NULL COMMENT 'article ID',
   `tag_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'tag ID',
@@ -55,7 +55,7 @@ CREATE TABLE `blog_article_tag` (
 
 
 -- create auth table
-CREATE TABLE `blog_auth` (
+CREATE TABLE `blogie_auth` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `app_key` varchar(20) DEFAULT '' COMMENT 'Key',
   `app_secret` varchar(50) DEFAULT '' COMMENT 'Secret',
@@ -68,4 +68,4 @@ CREATE TABLE `blog_auth` (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='auth management';
 
-INSERT INTO `blogie`.`blog_auth`(`id`, `app_key`, `app_secret`, `created_on`, `created_by`, `modified_on`, `modified_by`, `deleted_on`, `is_del`) VALUES (1, 'i0Ek3', 'blogie', 0, 'i0Ek3', 0, '', 0, 0);
+INSERT INTO `blogie`.`blogie_auth`(`id`, `app_key`, `app_secret`, `created_on`, `created_by`, `modified_on`, `modified_by`, `deleted_on`, `is_del`) VALUES (1, 'i0Ek3', 'blogie', 0, 'i0Ek3', 0, '', 0, 0);
