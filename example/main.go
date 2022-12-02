@@ -13,14 +13,13 @@ import (
 )
 
 func main() {
-	_a, _b, _c := false, false, true
-	if _a {
+	if false {
 		runme()
 	}
-	if _b {
+	if false {
 		watchdog()
 	}
-	if _c {
+	if true {
 		decode()
 	}
 }

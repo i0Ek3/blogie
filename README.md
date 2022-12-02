@@ -120,14 +120,14 @@ After import blog.sql, it will create following four tables:
 
 ```console
 mysql> show tables;
-+------------------+
-| Tables_in_blogie |
-+------------------+
++--------------------+
+|  Tables_in_blogie  |
++--------------------+
 | blogie_article     |
 | blogie_article_tag |
 | blogie_auth        |
 | blogie_tag         |
-+------------------+
++--------------------+
 4 rows in set (0.00 sec)
 ```
 
